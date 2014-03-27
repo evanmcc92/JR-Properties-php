@@ -1,0 +1,126 @@
+/* 
+#26497F
+#99C0FF
+#4C91FF
+#4C607F
+#3D74CC
+ */
+
+.button {
+	background-color: #26497F;
+	border: 1px solid silver;
+	color: silver;
+}
+body {
+    background-color: #99C0FF;
+    font-family: sans-serif;
+}
+#logo {
+	margin: 0 0 15px 20px;
+}
+#body {
+	margin-top: 10px;
+    background: white;
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    border: 5px solid silver;
+}
+#aside {
+    width: 215px;
+    float: left;
+    padding-right: 5px;
+}
+#article {
+    width: 675px;
+    float: right;
+}
+address {
+    float: right;
+    margin-top: -135px;
+    margin-right: 75px;
+}
+header {
+    margin: -10px -10px 0;
+    padding-top: 20px;
+}
+#navbar {
+                background-color: #26497F;
+                padding: 20px;
+                height: 2.5em;
+}
+#navbar li {
+    list-style-type: none;
+    display: block;
+    padding: 5px 43px;
+                float:left;
+}
+#navbar a {
+                display: block;
+   padding: 5px 8px;
+   background-color: #26497F;
+   color: #99C0FF; }
+#navbar li ul {
+   display: none; 
+   background-color: #26497F;}
+#navbar li:hover ul, #navbar li.hover ul {
+   display: block;
+   position: absolute;
+   margin-top: 5px;
+   padding: 0; }
+#navbar li:hover li, #navbar li.hover li {
+   float: none; }
+#navbar li:hover li a, #navbar li.hover li a {
+   background-color: #26497F;
+    color: #99C0FF; }
+#navbar li li a:hover {
+   background-color: #26497F; }
+
+nav ul li {
+    list-style-type: none;
+    display: inline;
+    padding: 10px;
+}
+footer {
+    text-align: right;
+    clear: both;
+    bottom: 0;
+    background-color: #26497F;
+    padding: 15px;
+    margin: 0 -10px -10px;
+    color: #99C0FF;
+    font-size: 50%;
+}
+.residentlisting td img{
+    padding-right: 20px; 
+}
+.residentlisting {
+    text-align: left;
+    border: 1px solid silver; 
+}
+
+table {
+	margin: 20px auto;
+}
+
+ul {
+	list-style-type:none;
+}
+#aside li {
+	padding:5px;
+}
+
+
+nav a:link{
+    color: #99C0FF;
+}
+nav a:active{
+	
+}
+nav a:hover{
+	
+}
+nav a:visited{
+    color: white;
+}
