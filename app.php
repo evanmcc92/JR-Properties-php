@@ -41,10 +41,8 @@
                 <form method="post" action="app-action.php" >
                     <table>
                         <tr>
-                          <td colspan="4"> 
-                           <cfoutput>
+                          <td colspan="4">
                           <input name="AppDate" id="AppDate" type="hidden" value="<?php echo date("m/d/Y");?>"></td>
-                          </cfoutput>
                         </tr>
                         <tr>
                           <td colspan="4">&nbsp;</td>

@@ -1,15 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
     <title>Maintenance - J&R Properties</title>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="img/favicon.ico" type="image/x-icon">   
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+
+    
 </head>
 
 <body>
-                    <?php
+<?php
                     if (isset($_POST['submit'])){
 
                         if(empty($_POST['Plumbing'])){
@@ -46,24 +48,23 @@
                         if(! $retval ) {
                           die('Error: ' . mysql_error());
                         }
-                        echo'<script>alert("We apologize for the maintenance related incovenience. We will process your request to the best of our ability. For updates regarding your service request, please call (781) 974-5790.");</script>';
+                        echo'<script>alert("Le pedimos disculpas por la inconveniencia relacionada al mantenimiento de una de nuestras propierdades. Nosotros procesaremos su solicitud tan pronto como sea posible. Para actualizaciones relacionadas a su solicitud de servicio, por favor llame al (781) 974-5790.");</script>';
                     }                       
                     ?>
-
     <div id="body">
 
-    <?php include 'header.php'; ?>
+<?php include 'header.php'; ?>
+<h1>Mantenimiento</h1>
     
-                <h1>Maintenance</h1>
         <article>
-                <p>We  are sorry to hear that you are experiencing inconveniences with your unit.  Please fill out the form below with your name, phone and description of the  issue. Upon submitting the form, our team will begin to resolve the issue to  the best of our ability. </p>
-               
+                <p>Lamentamos o&iacute;r que usted est&aacute; experimentando inconvenientes con su unidad. Por favor complete el siguiente formulario con su nombre, tel&eacute;fono y descripci&oacute;n del problema. Al enviar el formulario, nuestro equipo  comenzar&aacute; a resolver el problema de la mejor manera posible.</p>
+
             <section id="maintenanceform">
                 <form method="POST" action="<?php $_PHP_SELF ?>">
-                    <p>First Name: <input name="TenantFirstName" id="TenantFirstName" size="50" Required="YES" Message="Please enter First Name."></p>
-                    <p>Last Name: <input name="TenantLastName" id="TenantLastName" size="50" Required="YES" Message="Please enter Last Name."></p>
+                    <p>Nombre: <input name="TenantFirstName" id="TenantFirstName" size="50" Required="YES" Message="Please enter First Name."></p>
+                    <p>Apellido: <input name="TenantLastName" id="TenantLastName" size="50" Required="YES" Message="Please enter Last Name."></p>
                     <p><select name="UnitID" id="UnitID">
-                             <option>Select a Unit</option>
+  					         <option>Seleccione su Unidad</option>
                     <?php
                         // Create connection
                         $con = mysql_connect('127.0.0.1:33067','root','');
@@ -75,7 +76,7 @@
                           }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "SELECT UnitID FROM ResidentialUnits UNION SELECT UnitID FROM CommercialUnits";
+                        $sql = "SELECT UnitID FROM ResidentialUnits UNION ALL SELECT UnitID FROM CommercialUnits ORDER BY UnitID";
                         $result = mysql_query($sql,$con);
 
 
@@ -89,15 +90,18 @@
                         ?>
                     </select>
                     </p>
-                    <p><input type="checkbox" name="Plumbing" value="Y">Plumbing 
-                    <input type="checkbox" name="Electric" value="Y">Electric 
-                    <input type="checkbox" name="Other" value="Y">Other</p>
-                    <p>Description:<br>
-                       <textarea name="Description" id="description" cols="43" rows="5" placeholder="Enter comments here."></textarea></p>
-                    <p><input type="submit" name="submit" value="Submit" class="button"> <input type="reset" value="Reset" class="button"></p> 
+                    <p><input type="checkbox" name="Plumbing" value="Y">
+                      Agua y sanitarios
+                      <input type="checkbox" name="Electric" value="Y">
+                      Electricidad  
+                      <input type="checkbox" name="Other" value="Y">
+                      Otros</p>
+                    <p>Descripci&oacute;n:<br>
+                       <textarea name="description" id="description" cols="43" rows="5" placeholder="Enter comments here."></textarea></p>
+                    <p><input type="submit" value="Enviar" class="button"> <input type="reset" value="Reiniciar" class="button"></p> 
                 </form>
                 
-            </section>
+                
         </article>
         
 <?php include 'footer.php'; ?>

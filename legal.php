@@ -14,38 +14,41 @@
     <div id="body">
 
     <?php include 'header.php'; ?>
-    
-        <aside id="aside">
-            <ul>
-                <li><a href="#legal">Legal Disclaimer</a></li>
-                <li><a href="#privacy">Privacy Statement</a></li>
-            </ul>
-        </aside>
-        <article id="article">
-            <section id="legal">
-                <h1>Legal Disclaimer</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer suscipit mauris felis, in hendrerit ante imperdiet in. Curabitur accumsan accumsan dictum. Suspendisse ultrices lacinia purus sed luctus. Nullam sed semper lacus, sit amet cursus purus. Sed in faucibus odio, nec tincidunt massa. Duis vulputate accumsan neque, sit amet viverra sapien sagittis eu. Pellentesque at nibh pellentesque, vehicula lectus a, condimentum nisi.</p>
-                <p>Integer suscipit condimentum fermentum. Vestibulum vitae dolor id nulla convallis venenatis. Nulla vel est leo. Quisque ultricies nec diam vel auctor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam arcu quam, pretium eget gravida ac, rhoncus at orci. Maecenas magna massa, pulvinar a orci a, pulvinar ultrices urna. Etiam vitae condimentum leo. Nunc nec fringilla tortor.</p>
-
-                <p>Donec dictum adipiscing augue, ut gravida eros aliquam id. Vivamus et dui elit. Sed rutrum at metus a mattis. Mauris vulputate tincidunt porta. Etiam pretium dapibus adipiscing. Donec vel nisi ac diam vulputate blandit. Phasellus ac consequat massa. Proin volutpat nisi tortor, eu cursus massa molestie et. Nullam eu sem urna. Curabitur eget placerat ligula, sit amet consectetur tortor. Duis vulputate, arcu vitae blandit dictum, mauris sapien bibendum massa, a viverra urna leo a purus. Maecenas porttitor semper ligula nec molestie. Nulla velit enim, dapibus vehicula mattis sit amet, luctus et mi. Proin diam leo, ultricies a euismod ac, facilisis sit amet ipsum. Phasellus venenatis libero eget nisi laoreet, non accumsan elit congue. Phasellus in turpis lectus.</p>
-
-                <p>Quisque ac risus libero. Nunc egestas facilisis quam in lacinia. In at ultrices enim. Praesent ac ipsum non odio consectetur elementum nec id ligula. Phasellus odio velit, feugiat eget sollicitudin a, luctus non enim. Quisque viverra arcu vitae orci sollicitudin, auctor placerat magna pellentesque. Aliquam lacinia fringilla nulla, id semper tortor tincidunt eu. Proin facilisis, tortor eu faucibus venenatis, eros arcu auctor turpis, ut tincidunt nisl nibh at magna. Nullam dui massa, volutpat id mauris at, adipiscing dignissim quam. Donec sed condimentum leo. Vivamus sed magna faucibus, condimentum justo a, varius libero. Vivamus bibendum enim at massa dignissim, eu accumsan risus commodo. Duis gravida hendrerit mauris, at aliquet neque facilisis a. Phasellus accumsan porta lacinia.</p>
-
-                <p>Quisque in luctus velit, et fringilla ligula. Nam vitae nisl ut justo tempor sollicitudin et sit amet lacus. Donec tempor lacus purus, non aliquam neque tempor cursus. Maecenas nec lectus tristique, convallis eros in, feugiat lorem. Nunc leo nisl, interdum nec gravida id, placerat sit amet mi. Ut vel justo aliquet, sollicitudin eros ac, auctor felis. Duis ligula ligula, tincidunt eget lorem et, lobortis ullamcorper felis. Quisque ultrices, nisi eu semper congue, nisl diam pharetra erat, in fermentum velit erat id sem. Nunc sit amet malesuada neque. Vivamus lacinia consectetur tortor id dapibus. Nullam eget felis lectus. Proin eget tempor sapien, a blandit eros. Phasellus suscipit mi neque, eget condimentum nunc malesuada et. Nunc quis erat eu ipsum tempor tempus eget congue sem. Quisque vitae volutpat lorem, eget lobortis ante.</p>
+    <h1>Privacy Notice</h1>
+    <p>This privacy notice discloses the privacy practices for (www.jrpropertyrentals.com). This privacy notice applies solely to information collected by this web site. It will notify you of the following:</p>
+    <ul>
+      <li>What personally identifiable information is collected from you through the web site, how it is used and with whom it may be shared.</li>
+      <li>What choices are available to you regarding the use of your data.</li>
+      <li>The security procedures in place to protect the misuse of your information.</li>
+      <li>How you can correct any inaccuracies in the information.</li>
+    </ul>
+    <p>If you feel that we are not abiding by this privacy policy, you should contact us immediately via email <a href="mailto:perryjames249@gmail.com">perryjames249@gmail.com</a>.</p>
+        
+        <article>
+            <section id="info">
+                <h1>Information Collection, Use, and Sharing</h1>
+                <p>We are the sole owners of the information collected on this site. We only have  access to/collect information that you voluntarily give us via email or application forms from you. We will not sell or rent this information to anyone.</p>
+                <p>We will use your information to respond to you, regarding the reason you contacted us. We will not share your information with any third party outside of our organization, other than as necessary to fulfill your request.</p>
+          </section>
+            <section id="access">
+                <h1>Your Access to and  Control Over Information</h1>
+                <p>You may opt out of any future contacts from us at any time. You can do the following at any time by contacting us via the email address or phone number given on our website:</p>
+                <ul>
+                  <li>See what data we have about you, if any.</li>
+                  <li>Change/correct any data we have about you.</li>
+                  <li>Have us delete any data we have about you.</li>
+                  <li>Express any concern you have about our use of your data.</li>
+                </ul>
             </section>
-            <section id="privacy">
-                <h1>Privacy Statement</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer suscipit mauris felis, in hendrerit ante imperdiet in. Curabitur accumsan accumsan dictum. Suspendisse ultrices lacinia purus sed luctus. Nullam sed semper lacus, sit amet cursus purus. Sed in faucibus odio, nec tincidunt massa. Duis vulputate accumsan neque, sit amet viverra sapien sagittis eu. Pellentesque at nibh pellentesque, vehicula lectus a, condimentum nisi.</p>
-                <p>Integer suscipit condimentum fermentum. Vestibulum vitae dolor id nulla convallis venenatis. Nulla vel est leo. Quisque ultricies nec diam vel auctor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam arcu quam, pretium eget gravida ac, rhoncus at orci. Maecenas magna massa, pulvinar a orci a, pulvinar ultrices urna. Etiam vitae condimentum leo. Nunc nec fringilla tortor.</p>
-
-                <p>Donec dictum adipiscing augue, ut gravida eros aliquam id. Vivamus et dui elit. Sed rutrum at metus a mattis. Mauris vulputate tincidunt porta. Etiam pretium dapibus adipiscing. Donec vel nisi ac diam vulputate blandit. Phasellus ac consequat massa. Proin volutpat nisi tortor, eu cursus massa molestie et. Nullam eu sem urna. Curabitur eget placerat ligula, sit amet consectetur tortor. Duis vulputate, arcu vitae blandit dictum, mauris sapien bibendum massa, a viverra urna leo a purus. Maecenas porttitor semper ligula nec molestie. Nulla velit enim, dapibus vehicula mattis sit amet, luctus et mi. Proin diam leo, ultricies a euismod ac, facilisis sit amet ipsum. Phasellus venenatis libero eget nisi laoreet, non accumsan elit congue. Phasellus in turpis lectus.</p>
-
-                <p>Quisque ac risus libero. Nunc egestas facilisis quam in lacinia. In at ultrices enim. Praesent ac ipsum non odio consectetur elementum nec id ligula. Phasellus odio velit, feugiat eget sollicitudin a, luctus non enim. Quisque viverra arcu vitae orci sollicitudin, auctor placerat magna pellentesque. Aliquam lacinia fringilla nulla, id semper tortor tincidunt eu. Proin facilisis, tortor eu faucibus venenatis, eros arcu auctor turpis, ut tincidunt nisl nibh at magna. Nullam dui massa, volutpat id mauris at, adipiscing dignissim quam. Donec sed condimentum leo. Vivamus sed magna faucibus, condimentum justo a, varius libero. Vivamus bibendum enim at massa dignissim, eu accumsan risus commodo. Duis gravida hendrerit mauris, at aliquet neque facilisis a. Phasellus accumsan porta lacinia.</p>
-
-                <p>Quisque in luctus velit, et fringilla ligula. Nam vitae nisl ut justo tempor sollicitudin et sit amet lacus. Donec tempor lacus purus, non aliquam neque tempor cursus. Maecenas nec lectus tristique, convallis eros in, feugiat lorem. Nunc leo nisl, interdum nec gravida id, placerat sit amet mi. Ut vel justo aliquet, sollicitudin eros ac, auctor felis. Duis ligula ligula, tincidunt eget lorem et, lobortis ullamcorper felis. Quisque ultrices, nisi eu semper congue, nisl diam pharetra erat, in fermentum velit erat id sem. Nunc sit amet malesuada neque. Vivamus lacinia consectetur tortor id dapibus. Nullam eget felis lectus. Proin eget tempor sapien, a blandit eros. Phasellus suscipit mi neque, eget condimentum nunc malesuada et. Nunc quis erat eu ipsum tempor tempus eget congue sem. Quisque vitae volutpat lorem, eget lobortis ante.</p>
-            </section>
+            <section id="security">
+                <h1>Security</h1>
+<p>We take precautions to protect your information. When you submit sensitive information via the website, your information is protected both online and offline.</p>
+<p>Wherever we collect sensitive information, that information is encrypted and transmitted to us in a secure way. You can verify this by looking for a closed lock icon at the bottom of your web browser, or looking for &quot;https&quot; at the beginning of the address of the web page.</p>
+<p>While  we use encryption to protect sensitive information transmitted online, we also protect your information offline. Only employees who need the information to perform a specific job are granted access to personally identifiable  information. The computers/servers in which we store personally identifiable information are kept in a secure environment.</p>
+          </section>
         </article>
-<?php include 'footer.php'; ?>
+
+    <?php include 'footer.php'; ?>
 
   
     </div>

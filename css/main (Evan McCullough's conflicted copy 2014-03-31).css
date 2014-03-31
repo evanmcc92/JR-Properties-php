@@ -53,7 +53,7 @@ header {
 #navbar li {
     list-style-type: none;
     display: block;
-    padding: 5px 43px;
+    padding: 5px 40px;
                 float:left;
 }
 #navbar a {
@@ -104,7 +104,7 @@ table {
 	margin: 20px auto;
 }
 
-#aside ul {
+ul {
 	list-style-type:none;
 }
 #aside li {
