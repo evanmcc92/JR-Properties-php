@@ -52,7 +52,7 @@ padding-right: 23px;}
                             echo                '<td width="295" rowspan="5">';
                             echo                '<img src="img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
                             echo                    "</td>";
-                            echo                     '<td width="325">'.$row['StreetAddress'].','. $row['City'].'</td>';
+                            echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                             echo                "</tr>";
                             echo                "<tr>";
                             echo                    '<td>'.$row['NoBeds'].' Bedrooms, '.$row['NoBaths'].' Bathrooms</td>';
@@ -98,7 +98,7 @@ padding-right: 23px;}
                             echo                '<td width="295" rowspan="5">';
                             echo                '<img src="img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
                             echo                    "</td>";
-                            echo                     '<td width="325">'.$row['StreetAddress'].','. $row['City'].'</td>';
+                            echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                             echo                "</tr>";
                             echo                "<tr>";
                             echo                    '<td>'.$row['NoBeds'].' Bedrooms, '.$row['NoBaths'].' Bathrooms</td>';
@@ -143,7 +143,7 @@ padding-right: 23px;}
                             echo                '<td width="295" rowspan="5">';
                             echo                '<img src="img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
                             echo                    "</td>";
-                            echo                     '<td width="325">'.$row['StreetAddress'].','. $row['City'].'</td>';
+                            echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                             echo                "</tr>";
                             echo                "<tr>";
                             echo                    '<td>'.$row['NoBeds'].' Bedrooms, '.$row['NoBaths'].' Bathrooms</td>';
@@ -188,7 +188,7 @@ padding-right: 23px;}
                             echo                '<td width="295" rowspan="5">';
                             echo                '<img src="img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
                             echo                    "</td>";
-                            echo                     '<td width="325">'.$row['StreetAddress'].','. $row['City'].'</td>';
+                            echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                             echo                "</tr>";
                             echo                "<tr>";
                             echo                    '<td>'.$row['NoBeds'].' Bedrooms, '.$row['NoBaths'].' Bathrooms</td>';

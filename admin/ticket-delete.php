@@ -2,12 +2,7 @@
 
 <html>
 <head>
-<cfquery datasource="team3" name="tickets">
-select * from MaintenanceTickets WHERE TicketID = #Form.TicketID#;
-</cfquery>
-                <cfoutput query="tickets">
-    <title>Ticket No. #TicketID#  - J&R Properties</title>
-    </cfoutput>
+    <title>Ticket Deleted - J&R Properties</title>
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="../img/favicon.ico" type="image/x-icon">
@@ -44,63 +39,72 @@ select * from MaintenanceTickets WHERE TicketID = #Form.TicketID#;
 
     <div id="body">
 
-    <cfinclude template="header.cfm">
-                <cfoutput query="tickets">
-                <h1>Ticket No. #TicketID#</h1>
+    <?php include "header.php"; ?>
+<?php
+                if(isset($_POST['TicketID'])){
+                        
+                        // Create connection
+                        
+                $con = mysql_connect('127.0.0.1:33067','root','');
+
+                // Check connection
+                if (mysqli_connect_errno()){
+                  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                }
+
+                $db_selected = mysql_select_db("jrproper_jrproperties",$con);
+
+
+                $sql = "SELECT * FROM MaintenanceTickets where TicketID = ".mysql_real_escape_string($_POST['TicketID']);
+                      
+                $result = mysql_query($sql,$con);
+
+                $row = mysql_fetch_array($result);
+
+                echo '
+                <h1>Ticket No. '.$row['TicketID'].'</h1>
     
-        <article><form action="ticket-delete.cfm" method="post" id="delete-ticket">
-                    <input type="hidden" name="TicketID" value="#TicketID#">
-                    <input value="Delete" type="submit" class="button">
-                    </form></p>
-                    <cfif Resolved eq 'Yes'>
-                <p><form action="ticket-update.cfm" method="post">
-                    <input type="hidden" name="TicketID" value="#TicketID#">
-                    <input type="hidden" name="Resolved" value="N">
-                    <input value="Issue is not resolved" type="submit" class="button">
-                    </form></p>
-                    <cfelse>
-                <p><form action="ticket-update.cfm" method="post">
-                    <input type="hidden" name="TicketID" value="#TicketID#">
-                    <input type="hidden" name="Resolved" value="Y">
-                    <input value="Issue is resolved" type="submit" class="button">
-                    </form></p>
-                    </cfif>
-                    <p><a href="ticket-all.cfm">All Tickets</a></p>
+        <article>
+<h3>The following ticket has been deleted.</h3> 
+               
+
+            <section id="applicationform">
+                    <p><a href="ticket-all.php">All Tickets</a></p>
                     <p>&nbsp;</p>
                     <table>
                         <tr>
-                          <td colspan="4">#DATEFORMAT(IssueDate, "m/d/yyyy")#</td>
+                          <td colspan="4">'.$row['IssueDate'].'</td>
                       </tr>
                         <tr>
                           <td colspan="4">&nbsp;</td>
                         </tr>
                         <tr>
-                                <th colspan="4">Ticket No. #TicketID#</th>
+                                <th colspan="4">Ticket No. '.$row['TicketID'].'</th>
                         </tr>
                         <tr>
                             <td><b>First Name:</b></td>
-                            <td>#TenantFirstName#</td>
+                            <td>'.$row['TenantFirstName'].'</td>
                             <td><strong>Last Name:</strong></td>
-                            <td>#TenantLastName#</td>
+                            <td>'.$row['TenantLastName'].'</td>
                         </tr>
                         <tr>
                             <td><strong>Unit ID:</strong></td>
-                            <td>#UnitID#</td>
+                            <td>'.$row['UnitID'].'</td>
                             <td><strong>Resolved:</strong></td>
-                            <td>#YesNoFormat(Resolved)#</td>
+                            <td>'.$row['Resolved'].'</td>
                         </tr>
                         <tr>
                                 <td colspan="4">&nbsp;</td>
                         </tr>
                         <tr>
                             <td><b>Plumbing:</b></td>
-                            <td>#YesNoFormat(Plumbing)#</td>
+                            <td>'.$row['Plumbing'].'</td>
                             <td><strong>Electric:</strong></td>
-                            <td>#YesNoFormat(Electric)#</td>
+                            <td>'.$row['Electric'].'</td>
                         </tr>
                         <tr>
                             <td><b>Other:</b></td>
-                            <td>#YesNoFormat(Other)#</td>
+                            <td>'.$row['Other'].'</td>
                             <td colspan="2">&nbsp;</td>
                         </tr>
                         <tr>
@@ -110,20 +114,23 @@ select * from MaintenanceTickets WHERE TicketID = #Form.TicketID#;
                             <td colspan="4"><b>Description:</b></td>
                         </tr>
                         <tr>
-                            <td colspan="4">#Description#</td>
+                            <td colspan="4">'.$row['Description'].'</td>
                             <td>&nbsp;</td>
                         </tr>
                         <tr>
-                             <td colspan="4" class="break">&nbsp;</td>
+                            <td colspan="4" class="break">&nbsp;</td>
                         </tr>
                   </table>
 
-              </cfoutput>
               
             </section>
-        </article>
-
-		<cfinclude template="footer.cfm">
+        </article>';
+                $sql2 = 'DELETE FROM MaintenanceTickets where TicketID = '.mysql_real_escape_string($_POST['TicketID']);
+                $result2 = mysql_query($sql2,$con);
+                mysql_close($con);
+            }
+            ?>
+    <?php include "footer.php"; ?>
 
   
     </div>

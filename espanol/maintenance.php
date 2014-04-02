@@ -40,9 +40,9 @@
                         }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "INSERT INTO MaintenanceTickets (IssueDate, TenantFirstName, TenantLastName, UnitID, Plumbing, Electric, Other, Description)
+                        $sql = "INSERT INTO MaintenanceTickets (IssueDate, TenantFirstName, TenantLastName, UnitID, Plumbing, Electric, Other, Description, Resolved)
                                 VALUES
-                                (now(),'$_POST[TenantFirstName]','$_POST[TenantLastName]','$_POST[UnitID]','$Plumbing','$Electric','$Other','$_POST[Description]')";
+                                (now(), '$_POST[TenantFirstName]','$_POST[TenantLastName]','$_POST[UnitID]','$Plumbing','$Electric','$Other','$_POST[Description], 'No'')";
                         ;
                         $retval = mysql_query( $sql, $con );
                         if(! $retval ) {
