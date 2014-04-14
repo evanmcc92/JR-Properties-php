@@ -4,8 +4,9 @@
 <head>
     <title>Residental Properties - J&R Properties</title>
     <link rel="stylesheet" type="text/css" href="../css/main.css">
-    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
-<link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
+    <meta name="description" content="La gestión de propiedades residenciales es nuestra especialidad desde 1987. Ofrecemos apartamentos de calidad en Everett, Lynn, Chelsea y Revere.">
 <style>
 	.top{
 		
@@ -25,13 +26,13 @@ padding-right: 23px;}
     
         <article>
             <section id="article">
-                <p>La gesti&oacute;n de propiedades residenciales es nuestra especialidad desde 1987. Ofrecemos apartamentos de calidad en Everett, Lynn, Chelsea y Revere. </p>
+                <p>La gesti&oacute;n de propiedades residenciales es nuestra especialidad desde 1987. Ofrecemos apartamentos de calidad en Everett, Lynn, Chelsea y Revere. Los detalles abajo le proporcionan informaci&oacute;n sobre las unidades y su disponibilidad. Si una unidad tiene una fecha disponible de TAW (tambi&eacute;n conocido como inquilino a voluntad), por favor llene una solicitud y ll&aacute;menos para indicar su inter&eacute;s. Tan pronto como la unidad est&eacute; disponible (que puede ser entre los pr&oacute;ximos 30 d&iacute;as), nos pondremos en contacto con usted.</p>
                 <section id="chelsea">
                     <h4>Chelsea</h4>
                     <p class="top"><a href="#top">Top</a></p>
                     <?php
                         // Create connection
-                        $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
                         if (mysqli_connect_errno())
@@ -44,15 +45,18 @@ padding-right: 23px;}
                         $result = mysql_query($sql,$con);
 
 
-                        while($row = mysql_fetch_array($result))
-                          {
+                        while($row = mysql_fetch_array($result)){
+
+                        $sqlproperty = "SELECT * FROM Properties WHERE PropertyID = '".$row['PropertyID']."';";
+                        $resultproperty = mysql_query($sqlproperty,$con);
+                        $rowproperty = mysql_fetch_array($resultproperty);
 
                             echo                '<table id="resident-'.$row['UnitID'].'" class="residentlisting">';
                             echo                "<tr>";
                             echo                '<td width="295" rowspan="5">';
-                            echo                '<img src="../img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
+                            echo                '<img src="../img/'.$rowproperty['Photos'].'" alt="'.$row['Description'].'" width="275" />';
                             echo                    "</td>";
-                            echo                     '<td width="325">'.$row['StreetAddress'].','. $row['City'].'</td>';
+                            echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                             echo                "</tr>";
                             echo                "<tr>";
                             echo                    '<td>'.$row['NoBeds'].' Bedrooms, '.$row['NoBaths'].' Bathrooms</td>';
@@ -77,7 +81,7 @@ padding-right: 23px;}
                     <h4>Everett</h4><p class="top"><a href="#top">Top</a></p>
                     <?php
                         // Create connection
-                        $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
                         if (mysqli_connect_errno())
@@ -90,15 +94,18 @@ padding-right: 23px;}
                         $result = mysql_query($sql,$con);
 
 
-                        while($row = mysql_fetch_array($result))
-                          {
+                        while($row = mysql_fetch_array($result)){
+
+                        $sqlproperty = "SELECT * FROM Properties WHERE PropertyID = '".$row['PropertyID']."';";
+                        $resultproperty = mysql_query($sqlproperty,$con);
+                        $rowproperty = mysql_fetch_array($resultproperty);
 
                             echo                '<table id="resident-'.$row['UnitID'].'" class="residentlisting">';
                             echo                "<tr>";
                             echo                '<td width="295" rowspan="5">';
-                            echo                '<img src="../img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
+                            echo                '<img src="../img/'.$rowproperty['Photos'].'" alt="'.$row['Description'].'" width="275" />';
                             echo                    "</td>";
-                            echo                     '<td width="325">'.$row['StreetAddress'].','. $row['City'].'</td>';
+                            echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                             echo                "</tr>";
                             echo                "<tr>";
                             echo                    '<td>'.$row['NoBeds'].' Bedrooms, '.$row['NoBaths'].' Bathrooms</td>';
@@ -122,7 +129,7 @@ padding-right: 23px;}
                     <h4>Lynn</h4><p class="top"><a href="#top">Top</a></p>
                     <?php
                         // Create connection
-                        $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
                         if (mysqli_connect_errno())
@@ -135,15 +142,18 @@ padding-right: 23px;}
                         $result = mysql_query($sql,$con);
 
 
-                        while($row = mysql_fetch_array($result))
-                          {
+                        while($row = mysql_fetch_array($result)){
+
+                        $sqlproperty = "SELECT * FROM Properties WHERE PropertyID = '".$row['PropertyID']."';";
+                        $resultproperty = mysql_query($sqlproperty,$con);
+                        $rowproperty = mysql_fetch_array($resultproperty);
 
                             echo                '<table id="resident-'.$row['UnitID'].'" class="residentlisting">';
                             echo                "<tr>";
                             echo                '<td width="295" rowspan="5">';
-                            echo                '<img src="../img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
+                            echo                '<img src="../img/'.$rowproperty['Photos'].'" alt="'.$row['Description'].'" width="275" />';
                             echo                    "</td>";
-                            echo                     '<td width="325">'.$row['StreetAddress'].','. $row['City'].'</td>';
+                            echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                             echo                "</tr>";
                             echo                "<tr>";
                             echo                    '<td>'.$row['NoBeds'].' Bedrooms, '.$row['NoBaths'].' Bathrooms</td>';
@@ -167,7 +177,7 @@ padding-right: 23px;}
                     <h4>Revere</h4><p class="top"><a href="#top">Top</a></p>
                     <?php
                         // Create connection
-                        $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
                         if (mysqli_connect_errno())
@@ -180,15 +190,18 @@ padding-right: 23px;}
                         $result = mysql_query($sql,$con);
 
 
-                        while($row = mysql_fetch_array($result))
-                          {
+                        while($row = mysql_fetch_array($result)){
+
+                        $sqlproperty = "SELECT * FROM Properties WHERE PropertyID = '".$row['PropertyID']."';";
+                        $resultproperty = mysql_query($sqlproperty,$con);
+                        $rowproperty = mysql_fetch_array($resultproperty);
 
                             echo                '<table id="resident-'.$row['UnitID'].'" class="residentlisting">';
                             echo                "<tr>";
                             echo                '<td width="295" rowspan="5">';
-                            echo                '<img src="../img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
+                            echo                '<img src="../img/'.$rowproperty['Photos'].'" alt="'.$row['Description'].'" width="275" />';
                             echo                    "</td>";
-                            echo                     '<td width="325">'.$row['StreetAddress'].','. $row['City'].'</td>';
+                            echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                             echo                "</tr>";
                             echo                "<tr>";
                             echo                    '<td>'.$row['NoBeds'].' Bedrooms, '.$row['NoBaths'].' Bathrooms</td>';

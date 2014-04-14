@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+<meta name="description" content="Aviso legal para J&R Properties">
 
     
 </head>
@@ -23,7 +24,7 @@
       <li>C&oacute;mo puede corregir cualquier inexactitud en la informaci&oacute;n.</li>
     </ul>
         <p>Si usted siente que no estamos cumpliendo con esta pol&iacute;tica de privacidad, usted debe ponerse en contacto con nosotros inmediatamente por correo electr&oacute;nico <a href="mailto:perryjames249@gmail.com">perryjames249@gmail.com </a></p>
-        <article>
+                <article>
             <section id="info">
                 <h1>Sobre la recopilaci&oacute;n, uso y compartir</h1>
                 <p>Somos los &uacute;nicos due&ntilde;os de la informaci&oacute;n recogida en este sitio web. S&oacute;lo tenemos acceso a la informaci&oacute;n que usted nos proporcione voluntariamente a trav&eacute;s de correo electr&oacute;nico o los formularios de solicitud de usted. No venderemos ni alquilaremos esta informaci&oacute;n a nadie.</p>
@@ -44,7 +45,8 @@
 <p>Tomamos precauciones para proteger su informaci&oacute;n. Cuando usted env&iacute;a informaci&oacute;n sensible a trav&eacute;s del sitio web, su informaci&oacute;n es protegida tanto en l&iacute;nea como fuera de l&iacute;nea.</p>
 <p>Dondequiera que recopilemos informaci&oacute;n delicada , esa informaci&oacute;n es encriptada y transmitida a nosotros de una manera segura.</p>
 <p>S&oacute;lo los empleados que necesitan la informaci&oacute;n para realizar un trabajo espec&iacute;fico se les conceda acceso a la informaci&oacute;n de identificaci&oacute;n personal. Las computadoras / servidores en los que almacenamos informaci&oacute;n personal se mantienen en un entorno seguro.</p>
-          </section></article>
+          </section>
+          </article>
 
     <?php include 'footer.php'; ?>
 

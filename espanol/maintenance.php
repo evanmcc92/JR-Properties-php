@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+<meta name="description" content="Lamentamos oír que usted está experimentando inconvenientes con su unidad. ">
 
     
 </head>
@@ -32,7 +33,7 @@
                             $Other = "Yes";
                         }
                         // Create connection
-                        $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
                         if (mysqli_connect_errno()){
@@ -40,9 +41,9 @@
                         }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "INSERT INTO MaintenanceTickets (IssueDate, TenantFirstName, TenantLastName, UnitID, Plumbing, Electric, Other, Description, Resolved)
+                        $sql = "INSERT INTO MaintenanceTickets (IssueDate, TenantFirstName, TenantLastName, UnitID, Plumbing, Electric, Other, Description)
                                 VALUES
-                                (now(), '$_POST[TenantFirstName]','$_POST[TenantLastName]','$_POST[UnitID]','$Plumbing','$Electric','$Other','$_POST[Description], 'No'')";
+                                (now(),'$_POST[TenantFirstName]','$_POST[TenantLastName]','$_POST[UnitID]','$Plumbing','$Electric','$Other','$_POST[Description]')";
                         ;
                         $retval = mysql_query( $sql, $con );
                         if(! $retval ) {
@@ -57,8 +58,7 @@
 <h1>Mantenimiento</h1>
     
         <article>
-                <p>Lamentamos o&iacute;r que usted est&aacute; experimentando inconvenientes con su unidad. Por favor complete el siguiente formulario con su nombre, tel&eacute;fono y descripci&oacute;n del problema. Al enviar el formulario, nuestro equipo  comenzar&aacute; a resolver el problema de la mejor manera posible.</p>
-
+                <p>Lamentamos o&iacute;r que usted est&aacute; experimentando inconvenientes con su unidad. Por favor complete el siguiente formulario con su nombre, tel&eacute;fono y descripci&oacute;n del problema. Al enviar el formulario, nuestro equipo comenzar&aacute; a resolver el problema de la mejor manera posible.</p>
             <section id="maintenanceform">
                 <form method="POST" action="<?php $_PHP_SELF ?>">
                     <p>Nombre: <input name="TenantFirstName" id="TenantFirstName" size="50" Required="YES" Message="Please enter First Name."></p>
@@ -67,7 +67,7 @@
   					         <option>Seleccione su Unidad</option>
                     <?php
                         // Create connection
-                        $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
                         if (mysqli_connect_errno())

@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">   
+<meta name="description" content="J&R Properties is sorry to hear that you are experiencing inconveniences with your unit. Our team will begin to resolve any issues to the best of our ability.">
 </head>
 
 <body>
@@ -34,19 +35,21 @@
 
                         // Check connection
                         if (mysqli_connect_errno()){
-                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "INSERT INTO MaintenanceTickets (IssueDate, TenantFirstName, TenantLastName, UnitID, Plumbing, Electric, Other, Description, Resolved)
+                        $sql = "INSERT INTO MaintenanceTickets (IssueDate, TenantFirstName, TenantLastName, UnitID, Plumbing, Electric, Other, Description)
                                 VALUES
-                                (now(), '$_POST[TenantFirstName]','$_POST[TenantLastName]','$_POST[UnitID]','$Plumbing','$Electric','$Other','$_POST[Description], 'No'')";
+                                (now(),'$_POST[TenantFirstName]','$_POST[TenantLastName]','$_POST[UnitID]','$Plumbing','$Electric','$Other','$_POST[Description]')";
                         ;
                         $retval = mysql_query( $sql, $con );
                         if(! $retval ) {
                           die('Error: ' . mysql_error());
                         }
                         echo'<script>alert("We apologize for the maintenance related incovenience. We will process your request to the best of our ability. For updates regarding your service request, please call (781) 974-5790.");</script>';
+                    
+                        mysqli_close($con); 
                     }                       
                     ?>
 
@@ -63,19 +66,18 @@
                     <p>First Name: <input name="TenantFirstName" id="TenantFirstName" size="50" Required="YES" Message="Please enter First Name."></p>
                     <p>Last Name: <input name="TenantLastName" id="TenantLastName" size="50" Required="YES" Message="Please enter Last Name."></p>
                     <p><select name="UnitID" id="UnitID">
-                             <option>Select a Unit</option>
+                    <option>Select Your Unit</option>
                     <?php
                         // Create connection
                         $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
-                        if (mysqli_connect_errno())
-                          {
-                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                          }
+                        if (mysqli_connect_errno()){
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "SELECT UnitID FROM ResidentialUnits UNION SELECT UnitID FROM CommercialUnits";
+                        $sql = "SELECT UnitID FROM ResidentialUnits UNION All SELECT UnitID FROM CommercialUnits Order by UnitID";
                         $result = mysql_query($sql,$con);
 
 
@@ -85,6 +87,8 @@
                             echo                '<option value="'.$row['UnitID'].'">'.$row['UnitID'].'</option>';
                       
                           }
+                        mysqli_close($con); 
+
                                             
                         ?>
                     </select>

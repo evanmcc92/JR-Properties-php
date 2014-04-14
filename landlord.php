@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <meta name="description" content="J&R Properties is committed property management and maintenance. Services provided include rent collection, expense payments, property inspections and more.">
 
     
 </head>
@@ -54,7 +55,7 @@ mail($emailto, 'Landlord Message J&R Properties', $body, 'From: $email');
     
         <article>
             <section id="landlord-text">
-                <p>J & R Properties is committed to administrating all particulars associated with maintenance and management. We provide the following services:</p>
+                <p>J&R Properties is committed to administrating all particulars associated with maintenance and management. We provide the following services:</p>
     
                 <p>Property Management:</p>
 <ul>

@@ -3,7 +3,8 @@
 <html>
 <head>
     <title>Ticket - J&R Properties</title>
-    </cfoutput>
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="../img/favicon.ico" type="image/x-icon">
@@ -12,7 +13,7 @@
 		#navbar li {
 			list-style-type: none;
 			display: block;
-			padding: 5px 25px;
+            padding: 5px 10px;
 			float:left;
 		}
 		table {
@@ -44,7 +45,7 @@
     <?php
     if(isset($_POST['TicketID'])){
                 // Create connection
-                $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                 // Check connection
                 if (mysqli_connect_errno())
@@ -58,8 +59,6 @@
                 $result = mysql_query($sql,$con);
                 $row = mysql_fetch_array($result);
 
-
-                //set reolved to yes or no
 
 
 

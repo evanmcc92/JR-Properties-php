@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+<meta name="description" content="Managing residential properties is our specialty since 1987. We provide quality apartments in Everett, Lynn, Chelsea and Revere.">
 <style>
 	.top{
 		
@@ -25,7 +26,7 @@ padding-right: 23px;}
     
         <article>
             <section id="article">
-                <p>Managing residential properties is our specialty since 1987. We provide quality apartments in Everett, Lynn, Chelsea and Revere. Click on an area below in order to browser our current offerings.</p>
+                <p>Managing residential properties is our specialty since 1987. We provide quality apartments in Everett, Lynn, Chelsea and Revere. The listings below provide you with unit and availability information. If a unit has a date available of TAW (also known as tenant at will), please fill out an application and call us to indicate your interest. As soon as the unit becomes available, which can be within the next 30 days, we will contact you.</p>
                 <section id="chelsea">
                     <h4>Chelsea</h4>
                     <p class="top"><a href="#top">Top</a></p>
@@ -34,23 +35,25 @@ padding-right: 23px;}
                         $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
-                        if (mysqli_connect_errno())
-                          {
-                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                          }
+                        if (mysqli_connect_errno()){
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
                         $sql = "SELECT * FROM ResidentialUnits where city = 'Chelsea'";
                         $result = mysql_query($sql,$con);
 
 
-                        while($row = mysql_fetch_array($result))
-                          {
+                        while($row = mysql_fetch_array($result)){
+
+                        $sqlproperty = "SELECT * FROM Properties WHERE PropertyID = '".$row['PropertyID']."';";
+                        $resultproperty = mysql_query($sqlproperty,$con);
+                        $rowproperty = mysql_fetch_array($resultproperty);
 
                             echo                '<table id="resident-'.$row['UnitID'].'" class="residentlisting">';
                             echo                "<tr>";
                             echo                '<td width="295" rowspan="5">';
-                            echo                '<img src="img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
+                            echo                '<img src="img/'.$rowproperty['Photos'].'" alt="'.$row['Description'].'" width="275" />';
                             echo                    "</td>";
                             echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                             echo                "</tr>";
@@ -69,7 +72,7 @@ padding-right: 23px;}
                             echo            "</table>";
                           }
                                             
-                        mysql_close($con);
+                        mysqli_close($con);
                         ?>
 
                 </section>
@@ -80,23 +83,25 @@ padding-right: 23px;}
                         $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
-                        if (mysqli_connect_errno())
-                          {
-                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                          }
+                        if (mysqli_connect_errno()){
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
                         $sql = "SELECT * FROM ResidentialUnits where city = 'Everett'";
                         $result = mysql_query($sql,$con);
 
 
-                        while($row = mysql_fetch_array($result))
-                          {
+                        while($row = mysql_fetch_array($result)){
+
+                        $sqlproperty = "SELECT * FROM Properties WHERE PropertyID = '".$row['PropertyID']."';";
+                        $resultproperty = mysql_query($sqlproperty,$con);
+                        $rowproperty = mysql_fetch_array($resultproperty);
 
                             echo                '<table id="resident-'.$row['UnitID'].'" class="residentlisting">';
                             echo                "<tr>";
                             echo                '<td width="295" rowspan="5">';
-                            echo                '<img src="img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
+                            echo                '<img src="img/'.$rowproperty['Photos'].'" alt="'.$row['Description'].'" width="275" />';
                             echo                    "</td>";
                             echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                             echo                "</tr>";
@@ -115,7 +120,7 @@ padding-right: 23px;}
                             echo            "</table>";
                           }
                                             
-                        mysql_close($con);
+                        mysqli_close($con);
                         ?>
                 </section>
                 <section id="lynn">
@@ -125,23 +130,25 @@ padding-right: 23px;}
                         $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
-                        if (mysqli_connect_errno())
-                          {
-                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                          }
+                        if (mysqli_connect_errno()){
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
                         $sql = "SELECT * FROM ResidentialUnits where city = 'Lynn'";
                         $result = mysql_query($sql,$con);
 
 
-                        while($row = mysql_fetch_array($result))
-                          {
+                        while($row = mysql_fetch_array($result)){
+
+                        $sqlproperty = "SELECT * FROM Properties WHERE PropertyID = '".$row['PropertyID']."';";
+                        $resultproperty = mysql_query($sqlproperty,$con);
+                        $rowproperty = mysql_fetch_array($resultproperty);
 
                             echo                '<table id="resident-'.$row['UnitID'].'" class="residentlisting">';
                             echo                "<tr>";
                             echo                '<td width="295" rowspan="5">';
-                            echo                '<img src="img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
+                            echo                '<img src="img/'.$rowproperty['Photos'].'" alt="'.$row['Description'].'" width="275" />';
                             echo                    "</td>";
                             echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                             echo                "</tr>";
@@ -160,7 +167,7 @@ padding-right: 23px;}
                             echo            "</table>";
                           }
                                             
-                        mysql_close($con);
+                        mysqli_close($con);
                         ?>
                 </section>
                 <section id="revere">
@@ -170,23 +177,25 @@ padding-right: 23px;}
                         $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
-                        if (mysqli_connect_errno())
-                          {
-                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                          }
+                        if (mysqli_connect_errno()){
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
                         $sql = "SELECT * FROM ResidentialUnits where city = 'Revere'";
                         $result = mysql_query($sql,$con);
 
 
-                        while($row = mysql_fetch_array($result))
-                          {
+                        while($row = mysql_fetch_array($result)){
+
+                        $sqlproperty = "SELECT * FROM Properties WHERE PropertyID = '".$row['PropertyID']."';";
+                        $resultproperty = mysql_query($sqlproperty,$con);
+                        $rowproperty = mysql_fetch_array($resultproperty);
 
                             echo                '<table id="resident-'.$row['UnitID'].'" class="residentlisting">';
                             echo                "<tr>";
                             echo                '<td width="295" rowspan="5">';
-                            echo                '<img src="img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
+                            echo                '<img src="img/'.$rowproperty['Photos'].'" alt="'.$row['Description'].'" width="275" />';
                             echo                    "</td>";
                             echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                             echo                "</tr>";
@@ -205,10 +214,10 @@ padding-right: 23px;}
                             echo            "</table>";
                           }
                                             
-                        mysql_close($con);
+                        mysqli_close($con);
                         ?>
                 </section>
-            </section>   
+            </section>
 
             <section id="aside">
                 <ul>

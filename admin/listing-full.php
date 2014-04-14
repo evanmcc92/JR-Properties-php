@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-	<cfoutput>
-    <title>Listings #UnitID# - J&R Properties</title>
-    </cfoutput>
+<head><?php
+    echo '
+    <title>Listing No. '.$_POST['UnitID'].'- J&R Properties</title>';
+    ?>
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="../img/favicon.ico" type="image/x-icon">
@@ -13,7 +15,7 @@
 		#navbar li {
 			list-style-type: none;
 			display: block;
-			padding: 5px 25px;
+            padding: 5px 10px;
 			float:left;
 		}
 		table {
@@ -32,107 +34,134 @@
 
     <div id="body">
 
-    <cfinclude template="header.cfm">
-    <cfif UnitID contains'c'>
-    
-<cfquery datasource="team3" name="clistings">
-select * from CommercialUnits WHERE UnitID = '#Form.UnitID#';
-</cfquery>
-                <cfoutput query="clistings">
-        <article>
+    <?php include "header.php"; ?>
+    <?php
+    if(isset($_POST['UnitID'])){
+        if(strpos($_POST['UnitID'],'R') !== false){
+                $con = mysql_connect('127.0.0.1:33067','root','');
 
-                <h1>Listing No. #UnitID#</h1>
+                // Check connection
+                if (mysqli_connect_errno()){
+                  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                }
 
-            <section id="applicationform">
-                	<p><form action="listing-delete.cfm" method="post" id="delete-ticket">
+                $db_selected = mysql_select_db("jrproper_jrproperties",$con);
+                $sql = "SELECT * FROM ResidentialUnits WHERE UnitID = '".mysql_real_escape_string($_POST['UnitID'])."';";
+
+                $result = mysql_query($sql,$con);
+
+                $row = mysql_fetch_array($result);
+
+
+                echo '
+
+
+            <section id="residentunits">
+                <h1>Listing No. '.$row['UnitID'].'</h1>
+                    <p><form action="listing-delete.php" method="post" id="delete-listing">
                       <p>
-                        <input type="hidden" name="UnitID" value="#UnitID#">
+                        <input type="hidden" name="UnitID" value="'.$row['UnitID'].'">
                         <input value="Delete" type="submit" class="button">
                       </p>
                       <p>
-                	</form>
-                	<form action="listing-update.cfm" method="post">
-                    <input type="hidden" name="UnitID" value="#UnitID#">
+                    </form>
+                    <form action="listing-update.php" method="post">
+                    <input type="hidden" name="UnitID" value="'.$row['UnitID'].'">
                     <input value="Edit" type="submit" class="button">
                     </form></p>
-                    <p><a href="listing-all.cfm">All Listings</a></p>
+                    <p><a href="listing-all.php">All Listings</a></p>
                     <p>&nbsp;</p>
                 
-                    <table id="resident-#UnitID#" class="residentlisting">
-                        <tr>
-                            <td width="295" rowspan="5">
-                            	<img src="../img/#StreetAddress#.png" alt="#Description#" width="275" />
-							</td>
-                            <td width="325">#StreetAddress#, #City#</td>
-                        </tr>
-                        <tr>
-                            <td>#UnitName#</td>
-                        </tr>
-                        <tr>
-                            <td>#DollarFormat(MonthlyPrice)# (monthly)</td>
-                        </tr>
-                        <tr>
-                            <td>Date Available: #DateAvailable#</td>
-                        </tr>
-                        <tr>
-                            <td>#Description#</td>
-                        </tr>
-                    </table>
-                    </section>
-              </cfoutput>
-    <cfelse>
-
-<cfquery datasource="team3" name="rlistings">
-select * from ResidentialUnits WHERE UnitID = '#Form.UnitID#';
-</cfquery>
-                <cfoutput query="rlistings">
-
-
-            <section id="applicationform">
-                <h1>Listing No. #UnitID#</h1>
-                	<p><form action="listing-delete.cfm" method="post" id="delete-ticket">
-                      <p>
-                        <input type="hidden" name="UnitID" value="#UnitID#">
-                        <input value="Delete" type="submit" class="button">
-                      </p>
-                      <p>
-                	</form>
-                	<form action="listing-update.cfm" method="post">
-                    <input type="hidden" name="UnitID" value="#UnitID#">
-                    <input value="Edit" type="submit" class="button">
-                    </form></p>
-                    <p><a href="listing-all.cfm">All Listings</a></p>
-                    <p>&nbsp;</p>
-                
-                    <table id="resident-#UnitID#" class="residentlisting">
+                    <table id="resident-'.$row['UnitID'].'" class="residentlisting">
                         <tr>
                             <td width="295" rowspan="6">
-                            	<img src="../img/#StreetAddress#.png" alt="#Description#" width="275" />
-							</td>
-                            <td width="325">#StreetAddress#, #City#</td>
+                                <img src="../img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />
+                            </td>
+                            <td width="325">'.$row['StreetAddress'].', '.$row['City'].'</td>
                         </tr>
                         <tr>
-                            <td>#DollarFormat(MonthlyPrice)# (monthly)</td>
+                            <td>Vacant: '.$row['Vacant'].'</td>
                         </tr>
                         <tr>
-                            <td>#NoBeds# Bed & #NoBaths# Bath</td>
+                            <td>'.money_format("$%i",$row['MonthlyPrice']).' (monthly)</td>
                         </tr>
                         <tr>
-                            <td>Date Available: #DateAvailable#</td>
+                            <td>'.$row['NoBeds'].' Bed & '.$row['NoBaths'].' Bath</td>
                         </tr>
                         <tr>
-                            <td>#Description#</td>
+                            <td>Date Available: '.$row['DateAvailable'].'</td>
+                        </tr>
+                        <tr>
+                            <td>'.$row['Description'].'</td>
                         </tr>
                     </table>
-                    </section>
-    </cfoutput>
-                 </cfif>  
+                    </section> 
 
               
             </section>
-        </article>
+        </article>';
+    } else {
+                // Create connection
+                $con = mysql_connect('127.0.0.1:33067','root','');
 
-		<cfinclude template="footer.cfm">
+                // Check connection
+                if (mysqli_connect_errno()){
+                  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                }
+
+                $db_selected = mysql_select_db("jrproper_jrproperties",$con);
+                $sql = "SELECT * FROM CommercialUnits WHERE UnitID = '".mysql_real_escape_string($_POST["UnitID"])."';";
+
+                $result = mysql_query($sql,$con);
+                $row = mysql_fetch_array($result);
+                echo '
+        <article>
+
+                <h1>Listing No. '.$row['UnitID'].'</h1>
+
+            <section id="applicationform">
+                    <p><form action="listing-delete.php" method="post" id="delete-ticket">
+                      <p>
+                        <input type="hidden" name="UnitID" value="'.$row['UnitID'].'">
+                        <input value="Delete" type="submit" class="button">
+                      </p>
+                      <p>
+                    </form>
+                    <form action="listing-update.php" method="post">
+                    <input type="hidden" name="UnitID" value="'.$row['UnitID'].'">
+                    <input value="Edit" type="submit" class="button">
+                    </form></p>
+                    <p><a href="listing-all.php">All Listings</a></p>
+                    <p>&nbsp;</p>
+                
+                    <table id="commercial-'.$row['UnitID'].'" class="residentlisting">
+                        <tr>
+                            <td width="295" rowspan="5">
+                                <img src="../img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />
+                            </td>
+                            <td width="325">'.$row['StreetAddress'].', '.$row['City'].'</td>
+                        </tr>
+                        <tr>
+                            <td>'.$row['UnitName'].'</td>
+                        </tr>
+                        <tr>
+                            <td>Vacant: '.$row['Vacant'].'</td>
+                        </tr>
+                        <tr>
+                            <td>'.money_format("$%i",$row['MonthlyPrice']).' (monthly)</td>
+                        </tr>
+                        <tr>
+                            <td>Date Available: '.$row['DateAvailable'].'</td>
+                        </tr>
+                        <tr>
+                            <td>'.$row['Description'].'</td>
+                        </tr>
+                    </table>
+                    </section>';
+            }
+        }
+            ?>
+    <?php include "footer.php"; ?>
 
   
     </div>

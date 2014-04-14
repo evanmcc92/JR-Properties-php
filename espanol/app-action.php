@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+    <meta name="description" content="Formulario de aplicación para J&R Properties.">
 
     <style>
 		table {
@@ -44,7 +45,7 @@
                     if (isset($_POST['submit'])){
                         
                         // Create connection
-                        $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
                         if (mysqli_connect_errno()){

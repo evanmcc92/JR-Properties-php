@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <meta name="description" content="Get into contact with J&R Properties">
     <style type="text/css">
 
     #maps {
@@ -44,11 +45,11 @@ if (!$problem) {
 $email = $_POST['email'];
 $name = $_POST['name'];
 $message = $_POST['message'];
-$body = "Message from: ".$name."\n\nReturn Email: ".$email."\n\nMessage:\n".$message; //body of email
+$body = "Message from: $name\n\nReturn Email: $email\n\nMessage:\n$message"; //body of email
 $emailto = "webmaster@jrpropertyrentals.com"; //everyones email to send to
 
-echo '<script type="text/javascript">alert("Thank you '.$name.' for sending an email, expect to hear something soon.");</script>';
-mail($emailto, 'Contact Form Message J&R Properties', $body, 'From: '.$email);
+echo '<script type="text/javascript">alert("Thank you $name for sending an email, expect to hear something soon.");</script>';
+mail($emailto, 'Contact Form Message J&R Properties', $body, 'From: $email');
 }
 }
 

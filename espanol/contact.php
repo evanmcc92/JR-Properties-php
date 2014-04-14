@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+    <meta name="description" content="Información de contacto para J&R Properties">
     <style type="text/css">
 
     #maps {

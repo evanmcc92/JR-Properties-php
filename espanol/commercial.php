@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+<meta name="description" content="Las descripciones y fotografías de nuestras propiedades comerciales en Revere and Everett.">
 
 
     
@@ -23,7 +24,7 @@
                 <section>
         <?php
                 // Create connection
-                $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                 // Check connection
                 if (mysqli_connect_errno())
@@ -44,13 +45,13 @@
                     echo                '<td width="295" rowspan="5">';
                     echo                '<img src="../img/'.$row['StreetAddress'].'.png" alt="'.$row['Description'].'" width="275" />';
                     echo                    "</td>";
-                    echo                     '<td width="325">'.$row['StreetAddress'].','. $row['City'].'</td>';
+                    echo                     '<td width="325">'.$row['StreetAddress'].', '. $row['City'].'</td>';
                     echo                "</tr>";
                     echo                "<tr>";
                     echo                    '<td>'.$row['UnitName'].'</td>';
                     echo                "</tr>";
                     echo                "<tr>";
-                    echo                    '<td>'.$row['MonthlyPrice'].' (monthly)</td>';
+                    echo                    '<td>'.money_format("$%i",$row['MonthlyPrice']).' (monthly)</td>';
                     echo                "</tr>";
                     echo                "<tr>";
                     echo                    '<td>Date Available: '.$row['DateAvailable'].'</td>';

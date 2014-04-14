@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+<meta name="description" content="J&R Properties application for residential tenants..">
 
     <style>
 		table {
@@ -48,7 +49,7 @@
 
                         // Check connection
                         if (mysqli_connect_errno()){
-                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
@@ -97,7 +98,7 @@
                             <td><strong>Are You Married:</strong></td>
                             <td>'.$_POST['Married'].'</td>
                                 <td><strong>Spouse&#39;s Monthly Income:</strong></td>
-                            <td>'.$_POST['SpouseMonthlyIncome'].'</td>
+                            <td>'.money_format("$%i",$_POST['SpouseMonthlyIncome'])'</td>
                         </tr>
                         <tr>
                             <td><strong>SSN:</strong></td>
@@ -176,7 +177,8 @@
                                 <td colspan="4" class="break">&nbsp;</td>
                         </tr>
                     </table>';
-                    }                       
+                    }       
+                        mysqli_close($con);                  
                     ?>
 
               

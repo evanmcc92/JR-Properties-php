@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <meta name="description" content="J&R Properties is a property management firm that administrates commercial and residential properties within the Greater Boston area.">
 
 
 <!-- slideshow -->
@@ -47,10 +48,10 @@
     <?php include 'header.php'; ?>
 <h1>J&amp;R Properties</h1>
 <h3>About Us</h3>
-            <p>J & R Properties is a property management firm that administrates commercial and residential properties within the Greater Boston area. </p>
+            <p>J&R Properties is a property management firm that administrates commercial and residential properties within the Greater Boston area. </p>
             <p>We are committed to providing expert property management services to building owners and residents. </p>
       <p>Our vision is to create strong relationships with clients, residents and the local community.</p>
-            <p> Through hard work and dedication, J & R Properties has successfully operated by its vision since 1987.</p>
+            <p> Through hard work and dedication, J&R Properties has successfully operated by its vision since 1987.</p>
             <p>&nbsp;</p>
 
         
@@ -63,24 +64,23 @@
                         $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
-                        if (mysqli_connect_errno())
-                          {
-                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                          }
+                        if (mysqli_connect_errno()){
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "SELECT StreetAddress FROM ResidentialUnits UNION SELECT StreetAddress FROM CommercialUnits";
+                        $sql = "SELECT * FROM Properties";
                         $result = mysql_query($sql,$con);
 
 
                         while($row = mysql_fetch_array($result))
                           {
 
-                            echo '<img src="img/'.$row['StreetAddress'].'.png" alt="Property at '.$row['StreetAddress'].' width="250" />';
+                            echo '<img src="img/'.$row['Photos'].'" alt="Property at '.$row['StreetAddress'].'" width="250" />';
                       
                           }
                                             
-                        mysql_close($con);
+                        mysqli_close($con); 
                         ?>
     </div>
   </div>

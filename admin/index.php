@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html>
@@ -12,7 +13,7 @@
 		#navbar li {
 			list-style-type: none;
 			display: block;
-			padding: 5px 25px;
+            padding: 5px 10px;
 			float:left;
 		}
 		table {
@@ -45,7 +46,7 @@
         	<section id="applications-admin">
             <?php
                 // Create connection
-                $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                 // Check connection
                 if (mysqli_connect_errno())
@@ -89,7 +90,7 @@
         	<section id="maintenance-admin">
             <?php
                 // Create connection
-                $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                 // Check connection
                 if (mysqli_connect_errno())
@@ -134,7 +135,7 @@
         	<section id="listings-admin">
                <?php
                 // Create connection
-                $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                 // Check connection
                 if (mysqli_connect_errno())
@@ -152,6 +153,56 @@
                 <h3>Total Listings</h3>
                 <p>Total Listings: <a href="listing-all.php">'.$num_rows.'</a></p>';
                                     
+                mysql_close($con);
+                ?>
+            </section>
+            <section id="finances-admin">
+                <h3>Monthly Incomes</h3><?php
+                // Create connection
+                    $con = mysql_connect('127.0.0.1:33067','root','');
+
+                // Check connection
+                if (mysqli_connect_errno())
+                  {
+                  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                  }
+
+                $db_selected = mysql_select_db("jrproper_jrproperties",$con);
+
+
+                $CommercialAll = mysql_query('SELECT SUM(MonthlyPrice) AS CommercialAll FROM CommercialUnits'); 
+                $row = mysql_fetch_assoc($CommercialAll); 
+                $commercialall = $row['CommercialAll'];
+
+                echo'
+                <!-- commercial total -->
+                
+                <p>Max Income for Commercial Units: '.money_format("$%i",$commercialall).'</p>';
+
+                $commercialvacanttotal = mysql_query('SELECT sum(MonthlyPrice) as commercialvacanttotal FROM CommercialUnits WHERE Vacant="No"'); 
+                $row = mysql_fetch_assoc($commercialvacanttotal); 
+                $commercialvacant = $row['commercialvacanttotal'];
+
+                echo'<!-- commercial total where vacant = false-->
+                    <p>Current Monthly Commercial Revenue: '.money_format("$%i",$commercialvacant).'</p>
+                    <p>&nbsp;</p>';
+
+                $ResidentialAll = mysql_query('SELECT SUM(MonthlyPrice) AS ResidentialAll FROM ResidentialUnits'); 
+                $row = mysql_fetch_assoc($ResidentialAll); 
+                $residentialall = $row['ResidentialAll'];
+
+                echo'
+                <!-- commercial total -->
+                
+                <p>Max Income for Residential Units: '.money_format("$%i",$residentialall).'</p>';
+
+                $residentialvacanttotal = mysql_query('SELECT sum(MonthlyPrice) as residentialvacanttotal FROM ResidentialUnits WHERE Vacant="No"'); 
+                $row = mysql_fetch_assoc($residentialvacanttotal); 
+                $residentialvacant = $row['residentialvacanttotal'];
+
+                echo'<!-- commercial total where vacant = false-->
+                    <p>Current Monthly Residential Revenue: '.money_format("$%i",$residentialvacant).'</p>
+                    <p>&nbsp;</p>';
                 mysql_close($con);
                 ?>
             </section>

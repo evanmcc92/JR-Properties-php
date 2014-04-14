@@ -2,7 +2,9 @@
 
 <html>
 <head>
-    <title>Ticket Deleted - J&R Properties</title>
+    <?php
+        echo '<title>Tenant '.$_POST['TenantID'].' Deleted - J&R Properties</title>';
+    ?>
     <meta name="robots" content="noindex,nofollow">
     <meta name="googlebot" content="noindex,nofollow">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
@@ -13,24 +15,15 @@
 		#navbar li {
 			list-style-type: none;
 			display: block;
-            padding: 5px 10px;
+			padding: 5px 10px;
 			float:left;
 		}
 		table {
 			width: 75%;
-			margin: 0 auto;
+			margin: 0 auto 20px;
 		}
 		td, th {
 			padding:5px;
-		}
-		#PresentStAddress {
-			width:600px;
-		}
-		th {
-			border-bottom: 1px solid silver;
-		}
-		.break {
-			border-top: 1px solid silver;
 		}
 	</style>
     
@@ -42,8 +35,8 @@
     <div id="body">
 
     <?php include "header.php"; ?>
-<?php
-                if(isset($_POST['TicketID'])){
+    <?php
+                if(isset($_POST['TenantID'])){
                         
                         // Create connection
                         
@@ -57,31 +50,23 @@
                 $db_selected = mysql_select_db("jrproper_jrproperties",$con);
 
 
-                $sql = "SELECT * FROM MaintenanceTickets where TicketID = ".mysql_real_escape_string($_POST['TicketID']);
+                $sql = "SELECT * FROM Tenants where TenantID = '".mysql_real_escape_string($_POST['TenantID'])."'";
                       
                 $result = mysql_query($sql,$con);
 
                 $row = mysql_fetch_array($result);
 
                 echo '
-                <h1>Ticket No. '.$row['TicketID'].'</h1>
-    
-        <article>
-<h3>The following ticket has been deleted.</h3> 
-               
+                <h1>Tenant '.$row['TenantID'].' Has Been Deleted</h1>
 
-            <section id="applicationform">
-                    <p><a href="ticket-all.php">All Tickets</a></p>
+
+            <section id="tenantform">
+                    <p><a href="tenant-all.php">All Tenants</a></p>
                     <p>&nbsp;</p>
-                    <table>
+                
+                    <table id="'.$row['TenantID'].'">
                         <tr>
-                          <td colspan="4">'.$row['IssueDate'].'</td>
-                      </tr>
-                        <tr>
-                          <td colspan="4">&nbsp;</td>
-                        </tr>
-                        <tr>
-                                <th colspan="4">Ticket No. '.$row['TicketID'].'</th>
+                            <th colspan="4">Tenant '.$row['TenantID'].'</th>
                         </tr>
                         <tr>
                             <td><b>First Name:</b></td>
@@ -90,48 +75,38 @@
                             <td>'.$row['TenantLastName'].'</td>
                         </tr>
                         <tr>
+                            <td><strong>Phone Number:</strong></td>
+                            <td>'.$row['TenantPhone'].'</td>
                             <td><strong>Unit ID:</strong></td>
                             <td>'.$row['UnitID'].'</td>
-                            <td><strong>Resolved:</strong></td>
-                            <td>'.$row['Resolved'].'</td>
                         </tr>
                         <tr>
-                                <td colspan="4">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td><b>Plumbing:</b></td>
-                            <td>'.$row['Plumbing'].'</td>
-                            <td><strong>Electric:</strong></td>
-                            <td>'.$row['Electric'].'</td>
-                        </tr>
-                        <tr>
-                            <td><b>Other:</b></td>
-                            <td>'.$row['Other'].'</td>
+                            <td><b>Monthly Rent:</b></td>
+                            <td>'.money_format("$%i",$row['MonthlyRent']).'</td>
                             <td colspan="2">&nbsp;</td>
                         </tr>
                         <tr>
-                                <td colspan="4">&nbsp;</td>
+                            <td colspan="4">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td colspan="4"><b>Description:</b></td>
+                            <td><b>Lease Start:</b></td>
+                            <td>'.$row['LeaseStart'].'</td>
+                            <td><b>Lease End:</b></td>
+                            <td>'.$row['LeaseEnd'].'</td>
                         </tr>
                         <tr>
-                            <td colspan="4">'.$row['Description'].'</td>
-                            <td>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" class="break">&nbsp;</td>
+                             <td colspan="4" class="break">&nbsp;</td>
                         </tr>
                   </table>
-
-              
-            </section>
-        </article>';
-                $sql2 = 'DELETE FROM MaintenanceTickets where TicketID = '.mysql_real_escape_string($_POST['TicketID']);
+                    </section>';
+                $sql2 = 'DELETE FROM Tenants WHERE TenantID  = "'.mysql_real_escape_string($_POST['TenantID']).'"';
                 $result2 = mysql_query($sql2,$con);
                 mysql_close($con);
             }
             ?>
+              
+        </article>
+
     <?php include "footer.php"; ?>
 
   

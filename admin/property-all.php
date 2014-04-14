@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>All Listings - Admin - J&R Properties</title>
+    <title>All Properties - Admin - J&R Properties</title>
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <meta name="robots" content="noindex,nofollow">
     <meta name="googlebot" content="noindex,nofollow">
@@ -13,7 +13,7 @@
 		#navbar li {
 			list-style-type: none;
 			display: block;
-            padding: 5px 10px;
+			padding: 5px 10px;
 			float:left;
 		}
 		table {
@@ -37,11 +37,11 @@
 
 <body>
     <div id="body">
+               
+            
 
     <?php include "header.php"; ?>
-    
-        <h1>Listings</h1>
-        <?php
+    <?php
                 // Create connection
                     $con = mysql_connect('127.0.0.1:33067','root','');
 
@@ -52,52 +52,58 @@
                   }
 
                 $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                $sql = "SELECT UnitID, StreetAddress, City, DateAvailable FROM ResidentialUnits
-                    UNION
-                    SELECT UnitID, StreetAddress, City, DateAvailable FROM CommercialUnits";
+                $sql = "SELECT * FROM Properties";
 
                 $result = mysql_query($sql,$con);
                 
                 $num_rows = mysql_num_rows($result);
-
-
-                echo'
-            <h3>Total Listings: '.$num_rows.'</h3>
-            <h3><a href="listing-add.php">Add New Listing</a></h3>
+                echo '
+    
+        <h1>Properties</h1>
+       
+            <h3>Total Number of Properties: '.$num_rows.'</h3>
+            <h3><a href="property-add.php">Add New Property</a></h3>
             
             <table>
             	<tr>
-                	<th colspan="6">Listings</th>
+                	<th colspan="7">Properties</th>
                 </tr>
                 <tr>
-                	<th>Unit ID</th>
+                	<th>Property ID</th>
                 	<th>Street Address</th>
                 	<th>City</th>
+                	<th>Number of Units</th>
                 	<th colspan="2">Options</th>
-                </tr>';
-
+                </tr>
+                ';
+                
                 while($row = mysql_fetch_array($result)){
-                echo'<tr>
-                	<td>'.$row['UnitID'].'</td>
+                
+                echo'
+                <tr>
+                	<td>'.$row['PropertyID'].'</td>
                 	<td>'.$row['StreetAddress'].'</td>
                 	<td>'.$row['City'].'</td>
-                	<td><form action="listing-full.php" method="post">
-                    <input type="hidden" name="UnitID" value="'.$row['UnitID'].'">
+                	<td>'.$row['NumberofUnits'].'</td>
+                	<td><form action="property-full.php" method="post">
+                    <input type="hidden" name="PropertyID" value="'.$row['PropertyID'].'">
                     <input value="See More" type="submit" class="button">
                     </form></td>
-                	<td><form action="listing-update.php" method="post">
-                    <input type="hidden" name="UnitID" value="'.$row['UnitID'].'">
+                	<td><form action="property-update.php" method="post">
+                    <input type="hidden" name="PropertyID" value="'.$row['PropertyID'].'">
                     <input value="Edit" type="submit" class="button">
                     </form></td>
-                </tr>';
-                  }
-                echo'<tr>
-                    <td colspan="6" class="break">&nbsp;</td>
                 </tr>
-            </table>';
-                mysql_close($con);
-            ?>
-    <?php include "footer.php"; ?>
+                ';
+                }
+                echo'
+                <tr>
+                    <td colspan="7" class="break">&nbsp;</td>
+                </tr>
+            </table>
+        ';
+        ?>
+    <?php include "footer.php";?>
     </div>
 
 </body>

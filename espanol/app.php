@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+<meta name="description" content="Formulario de aplicación para J&R Properties.">
     <style>
 		table {
 			margin: 0 auto;
@@ -202,7 +203,7 @@
                     <td><strong>N&uacute;mero de Carros*:</strong></td>
                     <td><select name="NumberofCars"  required  >
                             <?php 
-                              for ($x=0; $x<=10; $x++)
+                              for ($x=0; $x<=5; $x++)
                                  {
                                  echo "<option value='$x'>$x</option>";
                                  }
@@ -212,7 +213,7 @@
                     <td><strong>N&uacute;mero de Mascotas*:</strong></td>
                     <td><select name="NumberofPets"  required  >
                             <?php 
-                              for ($x=0; $x<=10; $x++)
+                              for ($x=0; $x<=5; $x++)
                                  {
                                  echo "<option value='$x'>$x</option>";
                                  }

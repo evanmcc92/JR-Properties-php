@@ -13,7 +13,7 @@
 		#navbar li {
 			list-style-type: none;
 			display: block;
-			padding: 5px 25px;
+            padding: 5px 10px;
 			float:left;
 		}
 		table {
@@ -42,7 +42,7 @@
         <h1>Applications</h1>
         <?php
                 // Create connection
-                $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                 // Check connection
                 if (mysqli_connect_errno())
