@@ -54,6 +54,7 @@
                   echo "Failed to connect to MySQL: " . mysqli_connect_error();
                   }
 
+
                 $db_selected = mysql_select_db("jrproper_jrproperties",$con);
                 $sql = "select * from Applications ORDER BY AppDate DESC;";
                 $result = mysql_query($sql,$con);
@@ -70,10 +71,19 @@
                     </tr>';
 
                 while($row = mysql_fetch_array($result)){
+
+$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+$dataApplicantFirstName = base64_decode($row['ApplicantFirstName']);
+$ivApplicantFirstName = substr($dataApplicantFirstName, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$dataApplicantLastName = base64_decode($row['ApplicantLastName']);
+$ivApplicantLastName = substr($dataApplicantLastName, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+
+$decryptedApplicantFirstName = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataApplicantFirstName, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivApplicantFirstName),"\0");//script to decrypt
+$decryptedApplicantLastName = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataApplicantLastName, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivApplicantLastName),"\0");//script to decrypt
                 echo'<tr>
                         <td>'.$row['AppDate'].'</td>
-                        <td>'.$row['ApplicantLastName'].'</td>
-                        <td>'.$row['ApplicantFirstName'].'</td>
+                        <td>'.$decryptedApplicantLastName.'</td>
+                        <td>'.$decryptedApplicantFirstName.'</td>
                         <td>'.money_format("$%i",$row['MonthlyIncome']).'</td>
                     </tr>';
                   }

@@ -52,10 +52,54 @@
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
 
+$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+
+$ApplicantFirstName = $_POST['ApplicantFirstName'];
+$ApplicantLastName = $_POST['ApplicantLastName'];
+$PresentStAddress = $_POST['PresentStAddress'];
+$PresentState = $_POST['PresentState'];
+$PresentZIP = $_POST['PresentZIP'];
+$SSN = $_POST['SSN'];
+$Phone = $_POST['Phone'];
+
+$PresentLandlordFirstName = $_POST['PresentLandlordFirstName'];
+$PresentLandlordLastName = $_POST['PresentLandlordLastName'];
+$PresentLandlordPhone = $_POST['PresentLandlordPhone'];
+
+$FormerLandlordFirstName = $_POST['FormerLandlordFirstName'];
+$FormerLandlordLastName = $_POST['FormerLandlordLastName'];
+$FormerLandlordPhone = $_POST['FormerLandlordPhone'];
+
+$iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),MCRYPT_DEV_URANDOM); //used to add more randomness to the encryption process
+
+$encryptedApplicantFirstName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$ApplicantFirstName,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedApplicantLastName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$ApplicantLastName,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedPresentStAddress = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$PresentStAddress,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedPresentState = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$PresentState,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedPresentZIP = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$PresentZIP,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedPresentCity = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['PresentCity'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedSSN = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$SSN,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedPhone = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$Phone,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+
+$encryptedPresentLandlordFirstName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$PresentLandlordFirstName,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedPresentLandlordLastName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$PresentLandlordLastName,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedPresentLandlordPhone = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$PresentLandlordPhone,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+
+$encryptedFormerLandlordFirstName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$FormerLandlordFirstName,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedFormerLandlordLastName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$FormerLandlordLastName,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedFormerLandlordPhone = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$FormerLandlordPhone,MCRYPT_MODE_CBC,$iv)); //script to encrypt
+
+$encryptedCurrentEmployer = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['CurrentEmployer'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedEmployerPhone = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['EmployerPhone'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+
+$encryptedPersonalReferenceName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['PersonalReferenceName'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedPersonalReferencePhone = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['PersonalReferencePhone'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+
+
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
                         $sql = "INSERT INTO Applications(AppDate, ApplicantFirstName, ApplicantLastName, PresentStAddress, PresentCity, PresentState, PresentZIP, Phone, Married, SpouseMonthlyIncome, SSN, PresentLandlordFirstName, PresentLandlordLastName, PresentLandlordPhone, FormerLandlordFirstName, FormerLandlordLastName, FormerLandlordPhone, CurrentEmployer, EmployerPhone, JobTitle, MonthlyIncome, PersonalReferenceName, PersonalReferencePhone, NumberofCars, NumberofPets) 
                                 VALUES
-                                (now(), '$_POST[ApplicantFirstName]', '$_POST[ApplicantLastName]', '$_POST[PresentStAddress]', '$_POST[PresentCity]', '$_POST[PresentState]', '$_POST[PresentZIP]', '$_POST[Phone]', '$_POST[Married]', '$_POST[SpouseMonthlyIncome]', '$_POST[SSN]', '$_POST[PresentLandlordFirstName]', '$_POST[PresentLandlordLastName]', '$_POST[PresentLandlordPhone]', '$_POST[FormerLandlordFirstName]', '$_POST[FormerLandlordLastName]', '$_POST[FormerLandlordPhone]', '$_POST[CurrentEmployer]', '$_POST[EmployerPhone]', '$_POST[JobTitle]', '$_POST[MonthlyIncome]', '$_POST[PersonalReferenceName]', '$_POST[PersonalReferencePhone]', '$_POST[NumberofCars]', '$_POST[NumberofPets]')";
+                                (now(), '$encryptedApplicantFirstName', '$encryptedApplicantLastName', '$encryptedPresentStAddress', '$encryptedPresentCity', '$encryptedPresentState', '$encryptedPresentZIP', '$encryptedPhone', '$_POST[Married]', '$_POST[SpouseMonthlyIncome]', '$encryptedSSN', '$encryptedPresentLandlordFirstName', '$encryptedPresentLandlordLastName', '$encryptedPresentLandlordPhone', '$encryptedFormerLandlordFirstName', '$encryptedFormerLandlordLastName', '$encryptedFormerLandlordPhone', '$encryptedCurrentEmployer', '$encryptedEmployerPhone', '$_POST[JobTitle]', '$_POST[MonthlyIncome]', '$encryptedPersonalReferenceName', '$encryptedPersonalReferencePhone', '$_POST[NumberofCars]', '$_POST[NumberofPets]')";
                         ;
                         $retval = mysql_query( $sql, $con );
                         if(! $retval ) {
@@ -97,9 +141,11 @@
                         <tr>
                             <td><strong>Are You Married:</strong></td>
                             <td>'.$_POST['Married'].'</td>
-                                <td><strong>Spouse&#39;s Monthly Income:</strong></td>
-                            <td>'.money_format("$%i",$_POST['SpouseMonthlyIncome'])'</td>
-                        </tr>
+                                <td><strong>Spouse&#39;s Monthly Income:</strong></td>';
+                                if ($_POST['SpouseMonthlyIncome']){echo'
+                            <td>'.money_format("$%i",$_POST['SpouseMonthlyIncome']).'</td>';
+                    }
+                        echo '</tr>
                         <tr>
                             <td><strong>SSN:</strong></td>
                             <td>'.$_POST['SSN'].'</td>
@@ -178,7 +224,7 @@
                         </tr>
                     </table>';
                     }       
-                        mysqli_close($con);                  
+                        mysql_close($con);                  
                     ?>
 
               

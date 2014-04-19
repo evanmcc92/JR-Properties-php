@@ -35,100 +35,7 @@
                 <h1>Application</h1>
     
         <article>
-                <p>If you are in renting a unit within our residential properties, please fill out the application below or print out and mail in <a href="application.pdf" target="_blank">this form</a>. Upon completion, we will maintain in contact and schedule a showing. If you are a business owner and are interested in renting a commercial property, please contact us at <a href="mailto:email@example.com">email@example.com</a> for property inquiries.</p>
-               <?php 
-                    // $key = 'password to (en/de)crypt';
-                    // $string = ' string to be encrypted '; // note the spaces
-
-                    // $iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),MCRYPT_DEV_URANDOM);
-
-                    // $encrypted = base64_encode($iv . mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$string,MCRYPT_MODE_CBC,$iv));
-
-                    // $data = base64_decode($encrypted);
-                    // $iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
-
-                    // $decrypted = rtrim(
-                    //     mcrypt_decrypt(
-                    //         MCRYPT_RIJNDAEL_256,
-                    //         hash('sha256', $key, true),
-                    //         substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),
-                    //         MCRYPT_MODE_CBC,
-                    //         $iv
-                    //     ),
-                    //     "\0"
-                    // );
-
-                    // echo 'Encrypted:' . "\n";
-                    // var_dump($encrypted); // "ey7zu5zBqJB0rGtIn5UB1xG03efyCp+KSNR4/GAv14w="
-
-                    // echo "\n";
-
-                    // echo 'Decrypted:' . "\n";
-                    // var_dump($decrypted); // " string to be encrypted "
-
-//                $arr_value = array("apple","orange","pepper","bella");
-
-// function encrypt($text)
-// {
-//    return base64_encode($text);
-// }
-
-// function decrypt($text)
-// {
-//    return base64_decode($text);
-// }
-
-// $encrypted = array_map("encrypt", $arr_value);
-// echo '<pre>';
-// print_r($encrypted);
-
-// $decrypted = array_map("decrypt", $arr_value);
-// echo '<pre>';
-// print_r($decrypted);
-
-$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
-$string = ' string to be encrypted ';
-$iv = mcrypt_create_iv(
-    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),
-    MCRYPT_DEV_URANDOM
-); //used to add more randomness to the encryption process
-
-$encrypted = base64_encode(
-    $iv .
-    mcrypt_encrypt(
-        MCRYPT_RIJNDAEL_256,
-        hash('sha256', $key, true),
-        $string,
-        MCRYPT_MODE_CBC,
-        $iv
-    )
-); //script to encrypt
-$data = base64_decode($encrypted);
-$iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
-
-$decrypted = rtrim(
-    mcrypt_decrypt(
-        MCRYPT_RIJNDAEL_256,
-        hash('sha256', $key, true),
-        substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),
-        MCRYPT_MODE_CBC,
-        $iv
-    ),
-    "\0"
-);//script to decrypt
-
-
-echo 'Encrypted:' . "\n";
-var_dump($encrypted);
-
-echo "\n";
-
-echo 'Decrypted:' . "\n";
-var_dump($decrypted);
-
-
-               ?>
-
+            <p>If you are in renting a unit within our residential properties, please fill out the application below or print out and mail in <a href="application.pdf" target="_blank">this form</a>. Upon completion, we will maintain in contact and schedule a showing. If you are a business owner and are interested in renting a commercial property, please contact us at <a href="mailto:jandrpropertyrentals@gmail.com">jandrpropertyrentals@gmail.com</a> for property inquiries.</p>
             <section id="applicationform">
                 <form method="post" action="app-action.php" >
                     <table>
@@ -227,7 +134,7 @@ var_dump($decrypted);
                         </tr>
                         <tr>
                             <td><strong>Social Security Number*:</strong></td>
-                            <td><input name="SSN" id="SSN"required type="password" ></td>
+                            <td><input name="SSN" id="SSN" required type="password" ></td>
                                 <td colspan="2">&nbsp;</td>
                         </tr>
                         <tr>
