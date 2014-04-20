@@ -72,7 +72,7 @@ padding-right: 23px;}
                             echo            "</table>";
                           }
                                             
-                        mysqli_close($con);
+                        mysql_close($con);
                         ?>
 
                 </section>
@@ -120,7 +120,7 @@ padding-right: 23px;}
                             echo            "</table>";
                           }
                                             
-                        mysqli_close($con);
+                        mysql_close($con);
                         ?>
                 </section>
                 <section id="lynn">
@@ -167,7 +167,7 @@ padding-right: 23px;}
                             echo            "</table>";
                           }
                                             
-                        mysqli_close($con);
+                        mysql_close($con);
                         ?>
                 </section>
                 <section id="revere">
@@ -214,7 +214,7 @@ padding-right: 23px;}
                             echo            "</table>";
                           }
                                             
-                        mysqli_close($con);
+                        mysql_close($con);
                         ?>
                 </section>
             </section>

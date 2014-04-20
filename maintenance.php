@@ -95,7 +95,7 @@ $encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash(
                         while($row = mysql_fetch_array($result))
                           {
 
-                            echo                '<option value="'.$row['UnitID'].'">'.$row['UnitID'].'</option>';
+                            echo '<option value="'.$row['UnitID'].'">'.$row['UnitID'].'</option>';
                       
                           }
                         mysql_close($con); 

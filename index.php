@@ -80,7 +80,7 @@
                       
                           }
                                             
-                        mysqli_close($con); 
+                        mysql_close($con); 
                         ?>
     </div>
   </div>

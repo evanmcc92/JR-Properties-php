@@ -65,7 +65,7 @@
 					    echo            "</table>";
 					}
 									
-                	mysqli_close($con); 
+                	mysql_close($con); 
 				?>
                 </section>
         </article>
