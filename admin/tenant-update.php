@@ -63,7 +63,18 @@
 
                 $result = mysql_query($sql,$con);
                 $row = mysql_fetch_array($result);
-    
+    $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+$dataTenantFirstName = base64_decode($row['TenantFirstName']);
+$ivTenantFirstName = substr($dataTenantFirstName, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$dataTenantLastName = base64_decode($row['TenantLastName']);
+$ivTenantLastName = substr($dataTenantLastName, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$dataTenantPhone = base64_decode($row['TenantPhone']);
+$ivTenantPhone = substr($dataTenantPhone, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+
+$decryptedTenantFirstName = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataTenantFirstName, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivTenantFirstName),"\0");//script to decrypt
+$decryptedTenantLastName = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataTenantLastName, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivTenantLastName),"\0");//script to decrypt
+$decryptedTenantPhone = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataTenantPhone, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivTenantPhone),"\0");//script to decrypt
+
                 echo '
             <section id="tenantform">
                     <p><form action="tenant-delete.php" method="post" id="delete-tenant">
@@ -82,15 +93,15 @@
                             </tr>
                             <tr>
                                 <td><strong>First Name:</strong></td>
-                                <td><input name="TenantFirstName" id="TenantFirstName" type="text" value="'.$row['TenantFirstName'].'"></td>
+                                <td><input name="TenantFirstName" id="TenantFirstName" type="text" value="'.$decryptedTenantFirstName.'"></td>
                             </tr>
                             <tr>
                                 <td><strong>Last Name:</strong></td>
-                                <td><input name="TenantLastName" id="TenantLastName" type="text" value="'.$row['TenantLastName'].'"></td>
+                                <td><input name="TenantLastName" id="TenantLastName" type="text" value="'.$decryptedTenantLastName.'"></td>
                             </tr>
                             <tr>
                                 <td><strong>Phone Number:</strong></td>
-                                <td><input name="TenantPhone" id="TenantPhone" type="text" value="'.$row['TenantPhone'].'"></td>
+                                <td><input name="TenantPhone" id="TenantPhone" type="text" value="'.$decryptedTenantPhone.'"></td>
                             </tr>
                             <tr>
                                 <td><strong>Property Type:</strong></td>
@@ -104,14 +115,17 @@
                                 <td><strong>Unit ID:</strong></td>
                                 <td><select name="UnitID" id="UnitID">
   					<option value="'.$row['UnitID'].'">Current - '.$row['UnitID'].'</option>';
-                    			$sql2 = "SELECT UnitID FROM ResidentialUnits UNION All SELECT UnitID FROM CommercialUnits Order by UnitID";
+                    	$sql2 = "SELECT UnitID FROM ResidentialUnits UNION All SELECT UnitID FROM CommercialUnits Order by UnitID";
                         $result2 = mysql_query($sql2,$con);
 
 
-                        while($row2 = mysql_fetch_array($result2))
-                          {
+                        while($row2 = mysql_fetch_array($result2)){
+$dataUnitID = base64_decode($row2['UnitID']);
+$ivUnitID = substr($dataUnitID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedUnitID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataUnitID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivUnitID),"\0");//script to decrypt
 
-                            echo                '<option value="'.$row2['UnitID'].'">'.$row2['UnitID'].'</option>';
+
+                            echo                '<option value="'.$decryptedUnitID.'">'.$decryptedUnitID.'</option>';
                       
                           }
                     		echo '</select></td>

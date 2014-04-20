@@ -60,10 +60,18 @@
                         if (mysqli_connect_errno()){
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
+$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+$iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),MCRYPT_DEV_URANDOM); //used to add more randomness to the encryption process
+
+
+$encryptedTenantFirstName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['TenantFirstName'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedTenantLastName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['TenantLastName'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedTenantPhone = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['TenantPhone'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['UnitID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
                         $sql = "UPDATE Tenants 
-                        SET TenantID = '$_POST[TenantID]', TenantFirstName = '$_POST[TenantFirstName]', TenantLastName = '$_POST[TenantLastName]', TenantPhone = '$_POST[TenantPhone]', PropertyType = '$_POST[PropertyType]', UnitID = '$_POST[UnitID]', MonthlyRent = '$_POST[MonthlyRent]', LeaseStart = '$_POST[LeaseStart]', LeaseEnd = '$_POST[LeaseEnd]'
+                        SET TenantID = '$_POST[TenantID]', TenantFirstName = '$encryptedTenantFirstName', TenantLastName = '$encryptedTenantLastName', TenantPhone = '$encryptedTenantPhone', PropertyType = '$_POST[PropertyType]', UnitID = '$encryptedUnitID', MonthlyRent = '$_POST[MonthlyRent]', LeaseStart = '$_POST[LeaseStart]', LeaseEnd = '$_POST[LeaseEnd]'
                         WHERE TenantID = '$_POST[TenantID]'";
 
                         $result = mysql_query($sql,$con);
