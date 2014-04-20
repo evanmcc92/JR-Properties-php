@@ -38,10 +38,21 @@
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
 
+//encryption
+$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+$iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),MCRYPT_DEV_URANDOM); //used to add more randomness to the encryption process
+
+
+$encryptedTenantFirstName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['TenantFirstName'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedTenantLastName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['TenantLastName'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['UnitID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+
+
+
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "INSERT INTO MaintenanceTickets (IssueDate, TenantFirstName, TenantLastName, UnitID, Plumbing, Electric, Other, Description)
+                        $sql = "INSERT INTO MaintenanceTickets (IssueDate, TenantFirstName, TenantLastName, UnitID, Plumbing, Electric, Other, Description, Resolved)
                                 VALUES
-                                (now(),'$_POST[TenantFirstName]','$_POST[TenantLastName]','$_POST[UnitID]','$Plumbing','$Electric','$Other','$_POST[Description]')";
+                                (now(),'$encryptedTenantFirstName','$encryptedTenantLastName','$encryptedUnitID','$Plumbing','$Electric','$Other','$_POST[Description]', 'No')";
                         ;
                         $retval = mysql_query( $sql, $con );
                         if(! $retval ) {
@@ -49,7 +60,7 @@
                         }
                         echo'<script>alert("We apologize for the maintenance related incovenience. We will process your request to the best of our ability. For updates regarding your service request, please call (781) 974-5790.");</script>';
                     
-                        mysqli_close($con); 
+                        mysql_close($con); 
                     }                       
                     ?>
 
@@ -87,7 +98,7 @@
                             echo                '<option value="'.$row['UnitID'].'">'.$row['UnitID'].'</option>';
                       
                           }
-                        mysqli_close($con); 
+                        mysql_close($con); 
 
                                             
                         ?>
