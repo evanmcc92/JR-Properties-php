@@ -159,7 +159,13 @@ echo '
 
                         $con = mysql_connect('127.0.0.1:33067','root','');
 
-                        $allowedExts = array("gif", "jpeg", "jpg", "png");
+                        // Check connection
+                        if (mysqli_connect_errno()){
+                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
+                        
+                        // photo input stuff
+                        $allowedExts = array("gif", "jpeg", "jpg", "png", "GIF", "JPG", "JPEG", "PNG");
                         $temp = explode(".", $_FILES["Photos"]["name"]);
                         $picname = $_FILES["Photos"]["name"];
                         $extension = end($temp);
@@ -179,26 +185,41 @@ echo '
                                 }else{
                                     move_uploaded_file($_FILES["Photos"]["tmp_name"],
                                     "../img/" . $_FILES["Photos"]["name"]);
-                                    echo "Stored in: " . "../img/" . $_FILES["file"]["name"];
+                                    echo "Stored in: ../img/" . $_FILES["Photos"]["name"];
                                 }
                             }
-                        }else{
+                        } else {
                             echo "Invalid file";
+
+                            $picname = "";
                         }
-                        
-                        // Check connection
-                        if (mysqli_connect_errno()){
-                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+
+                        //vacant input stuff
+                        if (isset($_POST['Vacant'])){
+                            $Vacant = "Yes";
+                        } else {
+                            $Vacant = "No";
                         }
+
+
+//encryption stuff
+$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+$iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),MCRYPT_DEV_URANDOM); //used to add more randomness to the encryption process
+
+
+$encryptedPropertyID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['PropertyID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedStreetAddress = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['StreetAddress'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedCity = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['City'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['UnitID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedState = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['State'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
                         $sql = "INSERT INTO CommercialUnits 
-                                SET UnitID = '$_POST[UnitID]', UnitName = '$_POST[UnitName]', PropertyID = '$_POST[PropertyID]', StreetAddress = '$_POST[StreetAddress]', City = '$_POST[City]', State = '$_POST[State]', DateAvailable = '$_POST[DateAvailable]', DateAvailable = '$_POST[DateAvailable]', Description = '$_POST[Description]', MonthlyPrice = '$_POST[MonthlyPrice]', Photos = '$picname'
-                                WHERE UnitID = '$_POST[UnitID]'";
+                                SET UnitID = '$encryptedUnitID', UnitName = '$_POST[UnitName]', PropertyID = '$encryptedPropertyID', StreetAddress = '$encryptedStreetAddress', City = '$encryptedCity', State = '$encryptedState', DateAvailable = '$_POST[DateAvailable]', DateAvailable = '$_POST[DateAvailable]', Description = '$_POST[Description]', MonthlyPrice = '$_POST[MonthlyPrice]', Photos = '$picname'
+                                WHERE UnitID = '$encryptedUnitID'";
 
                         $result = mysql_query($sql,$con);
 
-                        $result = mysql_query($sql,$con);
 
                         echo '<p><a href="listing-all.php">All Listings</a></p>
                             <table>
