@@ -2,9 +2,9 @@
 
 <html>
 <head>
-<cfoutput>
-    <title>Property #PropertyID# - J&R Properties</title>
-    </cfoutput>
+<?php
+        echo '<title>Property '.$_POST['PropertyID'].' Deleted - J&R Properties</title>';
+    ?>
     <meta name="robots" content="noindex,nofollow">
     <meta name="googlebot" content="noindex,nofollow">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
@@ -34,54 +34,95 @@
 
     <div id="body">
 
-    <cfinclude template="header.cfm">
-		<cfoutput>
-                <h1>Property #PropertyID# Has Been Deleted</h1>
-		</cfoutput>
-<cfquery datasource="team3" name="properties">
-select * from Properties WHERE PropertyID = #Form.PropertyID#
-</cfquery>
-<cfquery datasource="team3" name="DeleteProperty"> 
-DELETE FROM Properties WHERE PropertyID = #Form.PropertyID#
-</cfquery>
-                <cfoutput query="properties">
+    
+		 <?php include "header.php"; ?>
+    <?php
+                if(isset($_POST['PropertyID'])){
+                        
+                        // Create connection
+                        
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
+                // Check connection
+                if (mysqli_connect_errno()){
+                  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                }
+
+                $db_selected = mysql_select_db("jrproper_jrproperties",$con);
+
+
+                $sql = "SELECT * FROM Properties where PropertyID = '".mysql_real_escape_string($_POST['PropertyID'])."'";
+                      
+                $result = mysql_query($sql,$con);
+
+                $row = mysql_fetch_array($result);
+$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+
+$dataPropertyID = base64_decode($row['PropertyID']);
+$ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
+
+$dataStreetAddress = base64_decode($row['StreetAddress']);
+$ivStreetAddress = substr($dataStreetAddress, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedStreetAddress = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataStreetAddress, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivStreetAddress),"\0");//script to decrypt
+
+$dataCity = base64_decode($row['City']);
+$ivCity = substr($dataCity, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedCity = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataCity, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivCity),"\0");//script to decrypt
+
+$dataState = base64_decode($row['State']);
+$ivState = substr($dataState, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedState = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataState, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivState),"\0");//script to decrypt
+
+                echo '
+                
+                <h1>Property '.$decryptedPropertyID.' Has Been Deleted</h1>
+               
 
             <section id="propertyform">
-                    <p><a href="property-all.cfm">All Properties</a></p>
+                    <p><a href="property-all.php">All Properties</a></p>
                     <p>&nbsp;</p>
                 
-                    <table id="#PropertyID#">
+                    <table id="'.$decryptedPropertyID.'">
                         <tr>
-                                <th colspan="4">Property #PropertyID#</th>
+                                <th colspan="4">Property '.$decryptedPropertyID.'</th>
                         </tr>
                         <tr>
                             <td><b>Street Address:</b></td>
-                            <td>#StreetAddress#</td>
+                            <td>'.$decryptedStreetAddress.'</td>
                             <td><strong>City:</strong></td>
-                            <td>#City#</td>
+                            <td>'.$decryptedCity.'</td>
                         </tr>
                         <tr>
                             <td><strong>State:</strong></td>
-                            <td>#State#</td>
+                            <td>'.$decryptedState.'</td>
                             <td><strong>Property Type:</strong></td>
-                            <td>#PropertyType#</td>
+                            <td>'.$row['PropertyType'].'</td>
                         </tr>
                         <tr>
                             <td><b>Number of Units:</b></td>
-                            <td>#NumberofUnits#</td>
+                            <td>'.$row['NumberofUnits'].'</td>
                             <td colspan="2">&nbsp;</td>
                         </tr>
+                        
+                                <tr>
+                                    <td colspan="2"><strong>Photos</strong></td>
+                                    <td colspan="2"><img src="../img/'.$row['Photos'] .'"></td>
+                                </tr>
                         <tr>
                              <td colspan="4" class="break">&nbsp;</td>
                         </tr>
                   </table>
-                    </section>
-    </cfoutput>
+                    </section>';
+                $sql2 = 'DELETE FROM Properties WHERE PropertyID  = "'.mysql_real_escape_string($_POST['PropertyID']).'"';
+                $result2 = mysql_query($sql2,$con);
+                mysql_close($con);
+            }
+            ?>
               
         </article>
 
-		<cfinclude template="footer.cfm">
+		 <?php include "footer.php"; ?>
 
   
     </div>

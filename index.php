@@ -75,12 +75,18 @@
 
                         while($row = mysql_fetch_array($result))
                           {
+        $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
 
-                            echo '<img src="img/'.$row['Photos'].'" alt="Property at '.$row['StreetAddress'].'" width="250" />';
+                          $dataStreetAddress = base64_decode($row['StreetAddress']);
+$ivStreetAddress = substr($dataStreetAddress, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedStreetAddress = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataStreetAddress, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivStreetAddress),"\0");//script to decrypt
+
+
+                            echo '<img src="img/'.$row['Photos'].'" alt="Property at '.$decryptedStreetAddress.'" width="250" />';
                       
                           }
                                             
-                        mysql_close($con); 
+                        mysqli_close($con); 
                         ?>
     </div>
   </div>

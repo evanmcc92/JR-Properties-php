@@ -54,7 +54,7 @@
                       
                 $result = mysql_query($sql,$con);
 
-                $row = mysql_fetch_array($result);
+                 $row = mysql_fetch_array($result);
 $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
 $dataTenantFirstName = base64_decode($row['TenantFirstName']);
 $ivTenantFirstName = substr($dataTenantFirstName, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));

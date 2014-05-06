@@ -225,7 +225,7 @@
                         <td colspan="4" class="break">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td colspan="2"><input type="submit" value="Enviar" class="button"></td>
+                    <td colspan="2"><input type="submit" value="Enviar" name="submit" class="button"></td>
                     <td colspan="2"><input type="reset" value="Reiniciar" class="button"></td>
                 </tr>
             </table>

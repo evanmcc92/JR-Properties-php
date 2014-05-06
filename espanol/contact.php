@@ -45,7 +45,7 @@ $email = $_POST['email'];
 $name = $_POST['name'];
 $message = $_POST['message'];
 $body = "Message from: ".$name."\n\nReturn Email: ".$email."\n\nMessage:\n".$message; //body of email
-$emailto = "webmaster@jrpropertyrentals.com"; //everyones email to send to
+$emailto = "jandrpropertyrentals@gmail.com"; //everyones email to send to
 
 echo '<script type="text/javascript">alert("Gracias '.$name.' para el env&iacute;o de un correo electr&oacute;nico, espera escuchar algo pronto.");</script>';
 mail($emailto, 'Contact Form Message J&R Properties', $body, 'From: '.$email);

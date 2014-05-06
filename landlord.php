@@ -37,7 +37,7 @@ $email = $_POST['email'];
 $name = $_POST['name'];
 $message = $_POST['message'];
 $body = "Message from: $name\n\nReturn Email: $email\n\nMessage:\n$message"; //body of email
-$emailto = "webmaster@evanamccullough.com"; //everyones email to send to
+$emailto = "jandrpropertyrentals@gmail.com"; //everyones email to send to
 
 echo '<script type="text/javascript">alert("Thank you '.$name.' for sending an email, expect to hear something soon.");</script>';
 mail($emailto, 'Landlord Message J&R Properties', $body, 'From: $email');
@@ -58,13 +58,13 @@ mail($emailto, 'Landlord Message J&R Properties', $body, 'From: $email');
                 <p>J&R Properties is committed to administrating all particulars associated with maintenance and management. We provide the following services:</p>
     
                 <p>Property Management:</p>
-        <ul>
-            <li>Rent collections</li>
-            <li>Expense payments</li>
-            <li>Fostering professional relationships with tenants</li>
-            <li>Renewal and extension of leases</li>
-            <li>Background and credit checks of applicants</li>
-            <li>Compliant with local, state and federal laws and regulations</li>
+<ul>
+  <li>Rent collections          </li>
+  <li>Expense payments</li>
+          <li>Fostering professional relationships with tenants</li>
+          <li>Renewal and extension of leases</li>
+          <li>Background and credit checks of applicants</li>
+          <li>Compliant with local, state and federal laws and regulations</li>
         </ul>
                 <p>Maintenance:</p>
                 <ul>

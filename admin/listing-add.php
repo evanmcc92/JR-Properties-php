@@ -89,7 +89,7 @@
                             </tr>
                             <tr>
                                 <td><strong>Property ID*:</strong></td>
-                                <td><select name="PropertyID" id="PropertyID" type="text" >
+                                <td><select name="PropertyID" id="PropertyID">
                                 <?php
                         // Create connection
                         $con = mysql_connect('127.0.0.1:33067','root','');
@@ -105,10 +105,14 @@
                         $result = mysql_query($sql,$con);
 
 
-                        while($row = mysql_fetch_array($result))
-                          {
+                        while($row = mysql_fetch_array($result)){
+                        $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+                        $dataPropertyID = base64_decode($row['PropertyID']);
+                        $ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+                        $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
 
-                            echo                '<option value="'.$row['PropertyID'].'">'.$row['PropertyID'].'</option>';
+
+                            echo                '<option value="'.$row['PropertyID'].'">'.$decryptedPropertyID.'</option>';
                       
                           }
                                             
@@ -125,8 +129,8 @@
                             </tr>
                             <tr>
                                 <td><strong>State*:</strong></td>
-                                <td><select name="State" id="State">
-                                    <option>Select a State</option>
+                                <td><select name="State">
+                                    <option>Select A State</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
                                     <option value="AZ">Arizona</option>
@@ -249,7 +253,7 @@
                             </tr>
                             <tr>
                                 <td><strong>Property ID*:</strong></td>
-                                <td><select name="PropertyID" id="PropertyID" type="text" >
+                                <td><select name="PropertyID" id="PropertyID" >
                                 <?php
                         // Create connection
                                 $con = mysql_connect('127.0.0.1:33067','root','');
@@ -265,10 +269,14 @@
                         $result = mysql_query($sql,$con);
 
 
-                        while($row = mysql_fetch_array($result))
-                          {
+                        while($row = mysql_fetch_array($result)){
+                        $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+                        $dataPropertyID = base64_decode($row['PropertyID']);
+                        $ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+                        $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
 
-                            echo '<option value="'.$row['PropertyID'].'">'.$row['PropertyID'].'</option>';
+
+                            echo                '<option value="'.$row['PropertyID'].'">'.$decryptedPropertyID.'</option>';
                       
                           }
                                             
@@ -285,8 +293,8 @@
                             </tr>
                             <tr>
                                 <td><strong>State*:</strong></td>
-                                <td><select name="State" id="State">
-                                    <option>Select a State</option>
+                                <td><select name="State">
+                                    <option>Select A State</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
                                     <option value="AZ">Arizona</option>

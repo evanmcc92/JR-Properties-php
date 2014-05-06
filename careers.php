@@ -18,9 +18,9 @@
             <h1>Careers</h1>
     
         <article>
-            <p>As a growing company, J &amp; R Properties is looking for new talent.</p>
-            <p>Positions can vary from assistant property managers to electricians and plumbers.</p>
-            <p>If you are interested in applying, please send a cover letter and resume to <a href="mailto:careers@jrproperties.com">careers@jrproperties.com</a>.</p>
+            <p>As  a growing company, J &amp; R Properties is looking for new talent.</p>
+            <p> Positions  can vary from assistant property managers to electricians and plumbers. </p>
+            <p>If you  are interested in applying, please send a cover letter and resume to <a href="mailto:careers@jrproperties.com">careers@jrproperties.com</a>.</p>
         </article>
 <?php include 'footer.php'; ?>
 

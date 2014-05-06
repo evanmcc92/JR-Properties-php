@@ -2,7 +2,7 @@
             <figure id="logo"><a href="index.php"><img src="../img/logo.png" alt="J&R Properties Logo"/></a></figure>
             <address>
               52R Green Street<br>
-              Lynn, MA 02194<br><br>
+              Lynn, MA 01902<br><br>
               (781) 974-5790
             </address>
             <nav>

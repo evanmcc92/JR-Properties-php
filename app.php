@@ -36,6 +36,7 @@
     
         <article>
             <p>If you are in renting a unit within our residential properties, please fill out the application below or print out and mail in <a href="application.pdf" target="_blank">this form</a>. Upon completion, we will maintain in contact and schedule a showing. If you are a business owner and are interested in renting a commercial property, please contact us at <a href="mailto:jandrpropertyrentals@gmail.com">jandrpropertyrentals@gmail.com</a> for property inquiries.</p>
+            <p><strong>All applications require a $25 processing fee. All payments are processed through <a href="https://paypals.com/" target="_blank">PayPals</a>. If you do not have a PayPals account, you can still proceed with a valid Debit or Credit account. Applications will not be processed unless a payment has been recieved.</strong></p>
             <section id="applicationform">
                 <form method="post" action="app-action.php" >
                     <table>

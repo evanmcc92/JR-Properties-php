@@ -45,7 +45,7 @@
                     if (isset($_POST['submit'])){
                         
                         // Create connection
-                        $con = mysql_connect('127.0.0.1:33067','root','');
+                    $con = mysql_connect('127.0.0.1:33067','root','');
 
                         // Check connection
                         if (mysqli_connect_errno()){
@@ -105,7 +105,7 @@ $encryptedPersonalReferencePhone = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RI
                         if(! $retval ) {
                           die('Error: ' . mysql_error());
                         }
-                        echo'
+                        echo '
                     <table>
                         <tr>
                           <td colspan="4">'.$_POST['AppDate'].'</td>

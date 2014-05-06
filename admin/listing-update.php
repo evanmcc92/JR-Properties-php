@@ -49,7 +49,7 @@
 $dataUnitID = base64_decode($_POST['UnitID']);
 $ivUnitID = substr($dataUnitID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
 $decryptedUnitID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataUnitID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivUnitID),"\0");//script to decrypt
-if(strpos($decryptedUnitID,'R') !== false){
+        if(strpos($decryptedUnitID,'R') !== false){
                 // Create connection
                 $con = mysql_connect('127.0.0.1:33067','root','');
 
@@ -63,11 +63,27 @@ if(strpos($decryptedUnitID,'R') !== false){
                 $sql = "SELECT * FROM ResidentialUnits WHERE UnitID = '".mysql_real_escape_string($_POST['UnitID'])."';";
 
                 $result = mysql_query($sql,$con);
-                $row = mysql_fetch_array($result);
 
-                echo '
-        <article>
-            <section id="listingform">
+                $row = mysql_fetch_array($result);
+$dataStreetAddress = base64_decode($row['StreetAddress']);
+$ivStreetAddress = substr($dataStreetAddress, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$dataCity = base64_decode($row['City']);
+$ivCity = substr($dataCity, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$dataUnitID = base64_decode($row['UnitID']);
+$ivUnitID = substr($dataUnitID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$dataState = base64_decode($row['State']);
+$ivState = substr($dataState, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$dataPropertyID = base64_decode($row['PropertyID']);
+$ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+
+$decryptedStreetAddress = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataStreetAddress, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivStreetAddress),"\0");//script to decrypt
+$decryptedCity = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataCity, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivCity),"\0");//script to decrypt
+$decryptedUnitID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataUnitID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivUnitID),"\0");//script to decrypt
+$decryptedState = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataState, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivState),"\0");//script to decrypt
+$decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
+
+                    echo '
+            		
                     <p><a href="listing-all.php">All Listings</a></p>
                     <form method="post" action="listing-delete.php">
                         <input type="hidden" name="UnitID" value="'.$row['UnitID'].'">
@@ -76,11 +92,8 @@ if(strpos($decryptedUnitID,'R') !== false){
                     <form method="post" action="listing-update-action.php" enctype="multipart/form-data">
                     	<table>
                             <tr>
-                                <th colspan="2">Residential Listing</th>
-                            </tr>
-                            <tr>
                                 <td><strong>Unit ID*:</strong></td>
-                                <td><input name="UnitID" id="UnitID" type="text" required value="'.$row['UnitID'].'" readonly></td>
+                                <td><input name="UnitID" id="UnitID" type="text" required value="'.$row['UnitID'].'" hidden>'.$decryptedUnitID.'</td>
                             </tr>
                             <tr>
                                 <td><strong>Unit Name:</strong></td>
@@ -89,13 +102,18 @@ if(strpos($decryptedUnitID,'R') !== false){
                             <tr>
                                 <td><strong>Property ID*:</strong></td>
                                 <td><select name="PropertyID">
-                                        <option value="'.$row['PropertyID'].'">Current - '.$row['PropertyID'].'</option>';
-                                $sql2 = "SELECT PropertyID FROM Properties";
+                                        <option value="'.$row['PropertyID'].'">Current - '.$decryptedPropertyID.'</option>';
+                                $sql2 = "SELECT PropertyID FROM Properties;";
                                 $result2 = mysql_query($sql2,$con);
 
 
                                 while($row2 = mysql_fetch_array($result2)){
-                                    echo '<option value="'.$row2['PropertyID'].'">'.$row2['PropertyID'].'</option>';
+                                    $dataPropertyID = base64_decode($row2['PropertyID']);
+                                    $ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+
+                                    $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
+
+                                    echo '<option value="'.$row2['PropertyID'].'">'.$decryptedPropertyID.'</option>';
                                 }
 
                                 echo '
@@ -103,16 +121,16 @@ if(strpos($decryptedUnitID,'R') !== false){
                             </tr>
                             <tr>
                                 <td><strong>Street Address*:</strong></td>
-                                <td><input name="StreetAddress" id="StreetAddress" type="text" value="'.$row['StreetAddress'].'"></td>
+                                <td><input name="StreetAddress" id="StreetAddress" type="text" value="'.$decryptedStreetAddress.'"></td>
                             </tr>
                             <tr>
                                 <td><strong>City*:</strong></td>
-                                <td><input name="City" id="City" type="text" value="'.$row['City'].'" ></td>
+                                <td><input name="City" id="City" type="text" value="'.$decryptedCity.'" ></td>
                             </tr>
                             <tr>
                                 <td><strong>State*:</strong></td>
                                 <td><select name="State">
-                                    <option value="'.$row['State'].'">Current - '.$row['State'].'</option>
+                                    <option value="'.$decryptedState.'">Current - '.$decryptedState.'</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
                                     <option value="AZ">Arizona</option>
@@ -201,7 +219,10 @@ if(strpos($decryptedUnitID,'R') !== false){
                             </tr>
                             <tr>
                                 <td><strong>Photos:</strong></td>
-                                <td><input type="file" name="Photos" value="'.$row['Photos'].'"></td>
+                                <td><p>'.$row['Photos'].'<br>
+                                <img src="../img/'.$row['Photos'].'"/></p>
+                                <p><input type="file" name="Photos" id="Photos" ><br>
+                                or Remove Image <input type="checkbox" name="PhotoBackup" ></p></td>
                             </tr>
                             <tr>
                                 <td colspan="2"><input type="submit" value="Submit" class="button"></td>
@@ -256,7 +277,7 @@ $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $
                     	<table>
                             <tr>
                                 <td><strong>Unit ID*:</strong></td>
-                                <td><input name="UnitID" id="UnitID" type="text" required value="'.$decryptedUnitID.'" readonly></td>
+                                <td><input name="UnitID" id="UnitID" type="text" required value="'.$row['UnitID'].'" hidden>'.$decryptedUnitID.'</td>
                             </tr>
                             <tr>
                                 <td><strong>Unit Name:</strong></td>
@@ -265,13 +286,18 @@ $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $
                             <tr>
                                 <td><strong>Property ID*:</strong></td>
                                 <td><select name="PropertyID">
-                                        <option value="'.$decryptedPropertyID.'">Current - '.$decryptedPropertyID.'</option>';
+                                        <option value="'.$row['PropertyID'].'">Current - '.$decryptedPropertyID.'</option>';
                                 $sql2 = "SELECT PropertyID FROM Properties";
                                 $result2 = mysql_query($sql2,$con);
 
 
                                 while($row2 = mysql_fetch_array($result2)){
-                                    echo '<option value="'.$row2['PropertyID'].'">'.$row2['PropertyID'].'</option>';
+                                    $dataPropertyID = base64_decode($row2['PropertyID']);
+                                    $ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+
+                                    $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
+
+                                    echo '<option value="'.$row2['PropertyID'].'">'.$decryptedPropertyID.'</option>';
                                 }
 
                                 echo '
@@ -357,7 +383,9 @@ $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $
                             <tr>
                                 <td><strong>Photos:</strong></td>
                                 <td><p>'.$row['Photos'].'<br>
-                                <img src="../img/'.$row['Photos'].'"/></p><input type="file" name="Photos" value="'.$row['Photos'].'"></td>
+                                <img src="../img/'.$row['Photos'].'"/></p>
+                                <p><input type="file" name="Photos" id="Photos" ><br>
+                                or Remove Image <input type="checkbox" name="PhotoBackup" ></p></td>
                             </tr>
                             <tr>
                                 <td colspan="2"><input type="submit" value="Submit" class="button"></td>

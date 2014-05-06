@@ -50,6 +50,7 @@
 
                             
     <?php
+
     if(isset($_POST['PropertyID'])){
                 // Create connection
                 $con = mysql_connect('127.0.0.1:33067','root','');
@@ -64,8 +65,28 @@
 
                 $result = mysql_query($sql,$con);
                 $row = mysql_fetch_array($result);
+
+$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+
+$dataPropertyID = base64_decode($row['PropertyID']);
+$ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
+
+$dataStreetAddress = base64_decode($row['StreetAddress']);
+$ivStreetAddress = substr($dataStreetAddress, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedStreetAddress = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataStreetAddress, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivStreetAddress),"\0");//script to decrypt
+
+$dataCity = base64_decode($row['City']);
+$ivCity = substr($dataCity, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedCity = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataCity, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivCity),"\0");//script to decrypt
+
+$dataState = base64_decode($row['State']);
+$ivState = substr($dataState, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedState = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataState, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivState),"\0");//script to decrypt
+
+
                 echo'
-                <h1>Property '.$row['PropertyID'].'</h1>
+                <h1>Property '.$decryptedPropertyID.'</h1>
                 
         <article>
 
@@ -83,19 +104,19 @@
                     <p><a href="property-all.php">All Properties</a></p>
                     <p>&nbsp;</p>
                 
-                    <table id="'.$row['PropertyID'].'">
+                    <table id="'.$decryptedPropertyID.'">
                         <tr>
-                                <th colspan="4">Property '.$row['PropertyID'].'</th>
+                                <th colspan="4">Property '.$decryptedPropertyID.'</th>
                         </tr>
                         <tr>
                             <td><b>Street Address:</b></td>
-                            <td>'.$row['StreetAddress'].'</td>
+                            <td>'.$decryptedStreetAddress.'</td>
                             <td><strong>City:</strong></td>
-                            <td>'.$row['City'].'</td>
+                            <td>'.$decryptedCity.'</td>
                         </tr>
                         <tr>
                             <td><strong>State:</strong></td>
-                            <td>'.$row['State'].'</td>
+                            <td>'.$decryptedState.'</td>
                             <td><strong>Property Type:</strong></td>
                             <td>'.$row['PropertyType'].'</td>
                         </tr>
@@ -104,6 +125,11 @@
                             <td>'.$row['NumberofUnits'].'</td>
                             <td colspan="2">&nbsp;</td>
                         </tr>
+						
+                                <tr>
+                                    <td colspan="2"><strong>Photos</strong></td>
+                                    <td colspan="2"><img src="../img/'.$row['Photos'] .'"></td>
+                                </tr>
                         <tr>
                              <td colspan="4" class="break">&nbsp;</td>
                         </tr>

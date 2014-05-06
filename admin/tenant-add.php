@@ -48,9 +48,6 @@
  
             
             <section id="tenantform">
-		<cfquery datasource="team3" name="unit_id">
-            
-            </cfquery>
                     <p><a href="tenant-all.php">All Tenants</a></p>
                     <form method="post" action="tenant-add-action.php">
                     	<table>
@@ -95,20 +92,13 @@
                                     }
 
                                     $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                                    $sql = "SELECT UnitID FROM ResidentialUnits UNION All SELECT UnitID FROM CommercialUnits Order by UnitID;";
+                                    $sql = "SELECT UnitID FROM ResidentialUnits UNION All SELECT UnitID FROM CommercialUnits";
 
                                     $result = mysql_query($sql,$con);
                                     $row = mysql_fetch_array($result);
                                     while($row = mysql_fetch_array($result)){
-$dataUnitID = base64_decode($row['UnitID']);
-$ivUnitID = substr($dataUnitID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
-$decryptedUnitID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataUnitID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivUnitID),"\0");//script to decrypt
-
-
-                            echo                '<option value="'.$decryptedUnitID.'">'.$decryptedUnitID.'</option>';
-                      
-                          }
-                                    
+                        				echo '<option value="'.$row['UnitID'].'">'.$row['UnitID'].'</option>';
+                                    }
                                 ?>
                     		</select></td>
                             </tr>

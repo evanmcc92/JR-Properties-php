@@ -78,12 +78,25 @@
                 ';
                 
                 while($row = mysql_fetch_array($result)){
-                
+                $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+
+$dataPropertyID = base64_decode($row['PropertyID']);
+$ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
+
+$dataStreetAddress = base64_decode($row['StreetAddress']);
+$ivStreetAddress = substr($dataStreetAddress, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedStreetAddress = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataStreetAddress, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivStreetAddress),"\0");//script to decrypt
+
+$dataCity = base64_decode($row['City']);
+$ivCity = substr($dataCity, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedCity = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataCity, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivCity),"\0");//script to decrypt
+
                 echo'
                 <tr>
-                	<td>'.$row['PropertyID'].'</td>
-                	<td>'.$row['StreetAddress'].'</td>
-                	<td>'.$row['City'].'</td>
+                	<td>'.$decryptedPropertyID.'</td>
+                	<td>'.$decryptedStreetAddress.'</td>
+                	<td>'.$decryptedCity.'</td>
                 	<td>'.$row['NumberofUnits'].'</td>
                 	<td><form action="property-full.php" method="post">
                     <input type="hidden" name="PropertyID" value="'.$row['PropertyID'].'">

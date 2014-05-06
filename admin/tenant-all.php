@@ -76,7 +76,7 @@
                 	<th colspan="2">Options</th>
                 </tr>';
 
-                while($row = mysql_fetch_array($result)){
+while($row = mysql_fetch_array($result)){
 $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
 
 $dataTenantFirstName = base64_decode($row['TenantFirstName']);

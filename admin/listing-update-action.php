@@ -2,10 +2,7 @@
 
 <html>
 <head>
-<?php
-echo '
-    <title>Listing '.$_POST['UnitID'].' Updated  - J&R Properties</title>';
-    ?>
+    <title>Listing Updated - J&R Properties</title>
     <meta name="robots" content="noindex,nofollow">
     <meta name="googlebot" content="noindex,nofollow">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
@@ -51,46 +48,82 @@ echo '
             <h3>Listing Has Been Updated</h3>
             <section id="listingform">
             <?php
-                if(isset($_POST['UnitID'])){
-                    if(strpos($_POST['UnitID'],'R') !== false){
+    if(isset($_POST['UnitID'])){
+        $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+$dataUnitID = base64_decode($_POST['UnitID']);
+$ivUnitID = substr($dataUnitID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedUnitID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataUnitID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivUnitID),"\0");//script to decrypt
+        if(strpos($decryptedUnitID,'R') !== false){
                         // Create connection
                         $con = mysql_connect('127.0.0.1:33067','root','');
                         
-                        $allowedExts = array("gif", "jpeg", "jpg", "png");
-                        $temp = explode(".", $_FILES["Photos"]["name"]);
-                        $picname = $_FILES["Photos"]["name"];
-                        $extension = end($temp);
-                        if ((($_FILES["Photos"]["type"] == "image/gif")
-                            || ($_FILES["Photos"]["type"] == "image/jpeg")
-                            || ($_FILES["Photos"]["type"] == "image/jpg")
-                            || ($_FILES["Photos"]["type"] == "image/pjpeg")
-                            || ($_FILES["Photos"]["type"] == "image/x-png")
-                            || ($_FILES["Photos"]["type"] == "image/png"))
-                            && ($_FILES["Photos"]["size"] < 20000)
-                            && in_array($extension, $allowedExts)){
-                            if ($_FILES["Photos"]["error"] > 0){
-                                echo "Return Code: " . $_FILES["Photos"]["error"] . "<br>";
-                            }else{
-                                if (file_exists("../img/" . $_FILES["Photos"]["name"])){
-                                    echo $_FILES["Photos"]["name"] . " already exists. ";
-                                }else{
-                                    move_uploaded_file($_FILES["Photos"]["tmp_name"],
-                                    "../img/" . $_FILES["Photos"]["name"]);
-                                    echo "Stored in: " . "../img/" . $_FILES["file"]["name"];
-                                }
+                        if(isset($_FILES["Photos"])){
+                            $allowedExts = array("gif", "jpeg", "jpg", "png");
+                            $temp = explode(".", $_FILES["Photos"]["name"]);
+                            $picname = $_FILES["Photos"]["name"];
+                            $extension = end($temp);
+                            if ((($_FILES["Photos"]["type"] == "image/gif")
+                                || ($_FILES["Photos"]["type"] == "image/jpeg")
+                                || ($_FILES["Photos"]["type"] == "image/jpg")
+                                || ($_FILES["Photos"]["type"] == "image/pjpeg")
+                                || ($_FILES["Photos"]["type"] == "image/x-png")
+                                || ($_FILES["Photos"]["type"] == "image/png"))
+                                && ($_FILES["Photos"]["size"] < 20000)
+                                && in_array($extension, $allowedExts)){
+                                    if ($_FILES["Photos"]["error"] > 0){
+                                        echo "Return Code: " . $_FILES["Photos"]["error"] . "<br>";
+                                    }else{
+                                        if (file_exists("../img/" . $_FILES["Photos"]["name"])){
+                                            echo $_FILES["Photos"]["name"] . " already exists. ";
+                                        }else{
+                                            move_uploaded_file($_FILES["Photos"]["tmp_name"],
+                                            "../img/" . $_FILES["Photos"]["name"]);
+                                            echo "Stored in: " . "../img/" . $_FILES["file"]["name"];
+                                        }
+                                    }
                             }
-                        }else{
-                            echo "Invalid file";
+                        } else {
+                            if(isset($_POST["PhotoBackup"])){
+                                $picname = "";
+                            } else {
+                                $sql1 = "select * from Properties WHERE PropertyID = '".mysql_real_escape_string($_POST['PropertyID'])."';";
+        
+                                $result1 = mysql_query($sql1,$con);
+                                $row = mysql_fetch_array($result1);
+                                $picname = $row["Photos"];
+                            }
+                        }
+
+                        //vacant input stuff
+                        if (isset($_POST['Vacant'])){
+                            $Vacant = "Yes";
+                        } else {
+                            $Vacant = "No";
                         }
 
                         // Check connection
                         if (mysqli_connect_errno()){
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
+//encryption stuff
+$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+$iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),MCRYPT_DEV_URANDOM); //used to add more randomness to the encryption process
+
+
+$encryptedPropertyID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['PropertyID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedStreetAddress = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['StreetAddress'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedCity = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['City'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['UnitID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+$encryptedState = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['State'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+
+$dataPropertyID = base64_decode($_POST['PropertyID']);
+$ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+
+$decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
                         $sql = "UPDATE ResidentialUnits
-                                SET UnitID = '$_POST[UnitID]', UnitName = '$_POST[UnitName]', PropertyID = '$_POST[PropertyID]', StreetAddress = '$_POST[StreetAddress]', City = '$_POST[City]', State = '$_POST[State]', DateAvailable = '$_POST[DateAvailable]', DateAvailable = '$_POST[DateAvailable]', Description = '$_POST[Description]', NoBeds = '$_POST[NoBeds]', MonthlyPrice = '$_POST[MonthlyPrice]', NoBaths = '$_POST[NoBaths]', Photos = '$picname'
+                                SET UnitName = '$_POST[UnitName]', PropertyID = '$_POST[PropertyID]', StreetAddress = '$encryptedStreetAddress', City = '$encryptedCity', State = '$encryptedState', DateAvailable = '$_POST[DateAvailable]', DateAvailable = '$_POST[DateAvailable]', Description = '$_POST[Description]', MonthlyPrice = '$_POST[MonthlyPrice]', Photos = '$picname', NoBeds = '$_POST[NoBeds]', NoBaths = '$_POST[NoBaths]'
                                 WHERE UnitID = '$_POST[UnitID]'";
 
                         $result = mysql_query($sql,$con);
@@ -103,7 +136,7 @@ echo '
                                 </tr>
                                 <tr>
                                     <td><strong>Unit ID*:</strong></td>
-                                    <td>'.$_POST['UnitID'].'</td>
+                                    <td>'.$decryptedUnitID.'</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Unit Name:</strong></td>
@@ -111,7 +144,7 @@ echo '
                                 </tr>
                                 <tr>
                                     <td><strong>Property ID*:</strong></td>
-                                    <td>'.$_POST['PropertyID'].'</td>
+                                    <td>'.$decryptedPropertyID.'</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Street Address*:</strong></td>
@@ -159,39 +192,41 @@ echo '
 
                         $con = mysql_connect('127.0.0.1:33067','root','');
 
-                        // Check connection
-                        if (mysqli_connect_errno()){
-                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                        }
-                        
-                        // photo input stuff
-                        $allowedExts = array("gif", "jpeg", "jpg", "png", "GIF", "JPG", "JPEG", "PNG");
-                        $temp = explode(".", $_FILES["Photos"]["name"]);
-                        $picname = $_FILES["Photos"]["name"];
-                        $extension = end($temp);
-                        if ((($_FILES["Photos"]["type"] == "image/gif")
-                            || ($_FILES["Photos"]["type"] == "image/jpeg")
-                            || ($_FILES["Photos"]["type"] == "image/jpg")
-                            || ($_FILES["Photos"]["type"] == "image/pjpeg")
-                            || ($_FILES["Photos"]["type"] == "image/x-png")
-                            || ($_FILES["Photos"]["type"] == "image/png"))
-                            && ($_FILES["Photos"]["size"] < 20000)
-                            && in_array($extension, $allowedExts)){
-                            if ($_FILES["Photos"]["error"] > 0){
-                                echo "Return Code: " . $_FILES["Photos"]["error"] . "<br>";
-                            }else{
-                                if (file_exists("../img/" . $_FILES["Photos"]["name"])){
-                                    echo $_FILES["Photos"]["name"] . " already exists. ";
-                                }else{
-                                    move_uploaded_file($_FILES["Photos"]["tmp_name"],
-                                    "../img/" . $_FILES["Photos"]["name"]);
-                                    echo "Stored in: ../img/" . $_FILES["Photos"]["name"];
-                                }
+                        if(isset($_FILES["Photos"])){
+                            $allowedExts = array("gif", "jpeg", "jpg", "png");
+                            $temp = explode(".", $_FILES["Photos"]["name"]);
+                            $picname = $_FILES["Photos"]["name"];
+                            $extension = end($temp);
+                            if ((($_FILES["Photos"]["type"] == "image/gif")
+                                || ($_FILES["Photos"]["type"] == "image/jpeg")
+                                || ($_FILES["Photos"]["type"] == "image/jpg")
+                                || ($_FILES["Photos"]["type"] == "image/pjpeg")
+                                || ($_FILES["Photos"]["type"] == "image/x-png")
+                                || ($_FILES["Photos"]["type"] == "image/png"))
+                                && ($_FILES["Photos"]["size"] < 20000)
+                                && in_array($extension, $allowedExts)){
+                                    if ($_FILES["Photos"]["error"] > 0){
+                                        echo "Return Code: " . $_FILES["Photos"]["error"] . "<br>";
+                                    }else{
+                                        if (file_exists("../img/" . $_FILES["Photos"]["name"])){
+                                            echo $_FILES["Photos"]["name"] . " already exists. ";
+                                        }else{
+                                            move_uploaded_file($_FILES["Photos"]["tmp_name"],
+                                            "../img/" . $_FILES["Photos"]["name"]);
+                                            echo "Stored in: " . "../img/" . $_FILES["file"]["name"];
+                                        }
+                                    }
                             }
                         } else {
-                            echo "Invalid file";
-
-                            $picname = "";
+                            if(isset($_POST["PhotoBackup"])){
+                                $picname = "";
+                            } else {
+                                $sql1 = "select * from Properties WHERE PropertyID = '".mysql_real_escape_string($_POST['PropertyID'])."';";
+        
+                                $result1 = mysql_query($sql1,$con);
+                                $row = mysql_fetch_array($result1);
+                                $picname = $row["Photos"];
+                            }
                         }
 
                         //vacant input stuff
@@ -201,7 +236,10 @@ echo '
                             $Vacant = "No";
                         }
 
-
+                        // Check connection
+                        if (mysqli_connect_errno()){
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
 //encryption stuff
 $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
 $iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),MCRYPT_DEV_URANDOM); //used to add more randomness to the encryption process
@@ -213,13 +251,21 @@ $encryptedCity = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('s
 $encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['UnitID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
 $encryptedState = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['State'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
 
+$dataPropertyID = base64_decode($_POST['PropertyID']);
+$ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+
+$decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
+
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "INSERT INTO CommercialUnits 
-                                SET UnitID = '$encryptedUnitID', UnitName = '$_POST[UnitName]', PropertyID = '$encryptedPropertyID', StreetAddress = '$encryptedStreetAddress', City = '$encryptedCity', State = '$encryptedState', DateAvailable = '$_POST[DateAvailable]', DateAvailable = '$_POST[DateAvailable]', Description = '$_POST[Description]', MonthlyPrice = '$_POST[MonthlyPrice]', Photos = '$picname'
-                                WHERE UnitID = '$encryptedUnitID'";
+
+                        
+                        $sql = "UPDATE CommercialUnits 
+                                SET UnitName = '$_POST[UnitName]', PropertyID = '$_POST[PropertyID]', StreetAddress = '$encryptedStreetAddress', City = '$encryptedCity', State = '$encryptedState', DateAvailable = '$_POST[DateAvailable]', DateAvailable = '$_POST[DateAvailable]', Description = '$_POST[Description]', MonthlyPrice = '$_POST[MonthlyPrice]', Photos = '$picname'
+                                WHERE UnitID = '$_POST[UnitID]'";
 
                         $result = mysql_query($sql,$con);
 
+                        $result = mysql_query($sql,$con);
 
                         echo '<p><a href="listing-all.php">All Listings</a></p>
                             <table>
@@ -228,7 +274,7 @@ $encryptedState = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('
                                 </tr>
                                 <tr>
                                     <td><strong>Unit ID*:</strong></td>
-                                    <td>'.$_POST['UnitID'].'</td>
+                                    <td>'.$decryptedUnitID.'</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Unit Name:</strong></td>
@@ -236,7 +282,7 @@ $encryptedState = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('
                                 </tr>
                                 <tr>
                                     <td><strong>Property ID*:</strong></td>
-                                    <td>'.$_POST['PropertyID'].'</td>
+                                    <td>'.$decryptedPropertyID.'</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Street Address*:</strong></td>

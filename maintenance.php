@@ -39,21 +39,20 @@
                         }
 
 //encryption
-$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg==';  //password for encryption
 $iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),MCRYPT_DEV_URANDOM); //used to add more randomness to the encryption process
 
 
 $encryptedTenantFirstName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['TenantFirstName'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
 $encryptedTenantLastName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['TenantLastName'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
-$encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['UnitID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
 
 
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
                         $sql = "INSERT INTO MaintenanceTickets (IssueDate, TenantFirstName, TenantLastName, UnitID, Plumbing, Electric, Other, Description, Resolved)
                                 VALUES
-                                (now(),'$encryptedTenantFirstName','$encryptedTenantLastName','$encryptedUnitID','$Plumbing','$Electric','$Other','$_POST[Description]', 'No')";
-                        ;
+                                (now(),'$encryptedTenantFirstName','$encryptedTenantLastName','$_POST[UnitID]','$Plumbing','$Electric','$Other','$_POST[Description]', 'No')";
+                        
                         $retval = mysql_query( $sql, $con );
                         if(! $retval ) {
                           die('Error: ' . mysql_error());
@@ -94,8 +93,13 @@ $encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash(
 
                         while($row = mysql_fetch_array($result))
                           {
+                          $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+$dataUnitID = base64_decode($row['UnitID']);
+$ivUnitID = substr($dataUnitID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+$decryptedUnitID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataUnitID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivUnitID),"\0");//script to decrypt
 
-                            echo '<option value="'.$row['UnitID'].'">'.$row['UnitID'].'</option>';
+
+                            echo '<option value="'.$row['UnitID'].'">'.$decryptedUnitID.'</option>';
                       
                           }
                         mysql_close($con); 
@@ -108,10 +112,10 @@ $encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash(
                     <input type="checkbox" name="Electric" value="Y">Electric 
                     <input type="checkbox" name="Other" value="Y">Other</p>
                     <p>Description:<br>
-                       <textarea name="Description" id="description" cols="43" rows="5" placeholder="Enter comments here."></textarea></p>
+                        <textarea name="Description" id="description" cols="43" rows="5" placeholder="Enter comments here."></textarea>
+                    </p>
                     <p><input type="submit" name="submit" value="Submit" class="button"> <input type="reset" value="Reset" class="button"></p> 
-                </form>
-                
+                </form>                
             </section>
         </article>
         

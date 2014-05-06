@@ -70,7 +70,7 @@
 
                 while($row = mysql_fetch_array($result)){
 
-$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption //password for encryption
 $dataApplicantFirstName = base64_decode($row['ApplicantFirstName']);
 $ivApplicantFirstName = substr($dataApplicantFirstName, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
 $dataApplicantLastName = base64_decode($row['ApplicantLastName']);

@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 
 <html>
-<head><?php echo'
-    <title>Tenant '.$_POST['TenantID'].' Updated  - J&R Properties</title>';
+<head><?php 
+ $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+
+$dataTenantID = base64_decode($row['TenantID']);
+$ivTenantID = substr($dataTenantID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+
+$decryptedTenantID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataTenantID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivTenantID),"\0");//script to decrypt
+echo'
+    <title>Tenant '.$decryptedTenantID.' Updated  - J&R Properties</title>';
 
 ?>
     <meta name="robots" content="noindex,nofollow">
@@ -77,6 +84,13 @@ $decryptedTenantFirstName = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha25
 $decryptedTenantLastName = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataTenantLastName, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivTenantLastName),"\0");//script to decrypt
 $decryptedTenantPhone = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataTenantPhone, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivTenantPhone),"\0");//script to decrypt
 
+
+$dataTenantID = base64_decode($row['TenantID']);
+$ivTenantID = substr($dataTenantID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+
+$decryptedTenantID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataTenantID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivTenantID),"\0");//script to decrypt
+
+
                 echo '
             <section id="tenantform">
                     <p><form action="tenant-delete.php" method="post" id="delete-tenant">
@@ -91,7 +105,7 @@ $decryptedTenantPhone = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', 
                             </tr>
                             <tr>
                                 <td><strong>Tenant ID:</strong></td>
-                                <td><input name="TenantID" id="TenantID" type="text" required value="'.$row['TenantID'].'" readonly></td>
+                                <td><input name="TenantID" id="TenantID" type="text" required value="'.$row['TenantID'].'" hidden>'.$decryptedTenantID.'</td>
                             </tr>
                             <tr>
                                 <td><strong>First Name:</strong></td>
@@ -127,7 +141,7 @@ $ivUnitID = substr($dataUnitID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYP
 $decryptedUnitID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataUnitID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivUnitID),"\0");//script to decrypt
 
 
-                            echo                '<option value="'.$decryptedUnitID.'">'.$decryptedUnitID.'</option>';
+                            echo                '<option value="'.$row2['UnitID'].'">'.$decryptedUnitID.'</option>';
                       
                           }
                     		echo '</select></td>
