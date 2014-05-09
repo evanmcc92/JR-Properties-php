@@ -4,8 +4,8 @@
 <head>
     <title>Residental Properties - J&R Properties</title>
     <link rel="stylesheet" type="text/css" href="../css/main.css">
-    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
-<link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="../../../img/favicon.ico" type="image/x-icon">
     <meta name="description" content="La gestión de propiedades residenciales es nuestra especialidad desde 1987. Ofrecemos apartamentos de calidad en Everett, Lynn, Chelsea y Revere.">
 <style>
 	.top{
@@ -40,9 +40,8 @@ padding-right: 23px;}
                         }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "SELECT * FROM ResidentialUnits where city = 'qlqMxGIj1s+jfgbTaSNyhkJ+PTlIrRRXyfUxjK3qfWR8FQumc+7qTi/PhNydof4HcidFAob3h78yyi262Ra7IA=='";
+                        $sql = "SELECT * FROM ResidentialUnits";
                         $result = mysql_query($sql,$con);
-
 
                         while($row = mysql_fetch_array($result)){
                             
@@ -69,24 +68,26 @@ padding-right: 23px;}
                                 $listingimage = $row['Photos'];
                             }
 
-
-                            echo '<table id="resident-'.$decryptedUnitID.'" class="residentlisting">
+                            if ($decryptedCity == "Chelsea"){
+                                echo '
+                                <table id="resident-'.$decryptedUnitID.'" class="residentlisting">
                                     <tr>
                                         <td width="295" rowspan="4">
                                             <img src="../img/'.$listingimage.'" alt="'.$row['Description'].'" width="275" />
                                         </td>
-                                    <td width="325">'.$decryptedStreetAddress.', '.$decryptedCity.'</td>
-                                </tr>
-                                <tr>
-                                    <td>'.money_format("$%i",$row['MonthlyPrice']).' (monthly)</td>
-                                </tr>
-                                <tr>
-                                    <td>Date Available: '.$row['DateAvailable'].'</td>
-                                </tr>
-                                <tr>
-                                    <td>'.$row['Description'].'</td>
-                                </tr>
-                            </table>';
+                                        <td width="325">'.$decryptedStreetAddress.', '.$decryptedCity.'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>'.money_format("$%i",$row['MonthlyPrice']).' (monthly)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date Available: '.$row['DateAvailable'].'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>'.$row['Description'].'</td>
+                                    </tr>
+                                </table>';
+                            }
                         }
                                             
                         mysqli_close($con);
@@ -105,7 +106,7 @@ padding-right: 23px;}
                         }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "SELECT * FROM ResidentialUnits where city = '935ViUwO1NptrRXaxSdtjWLR9up6M+jxpPRBykShS63KnZokk1Y7cXlUEjVur575Uc2RCPWVBLu0aloOfQXRng=='";
+                        $sql = "SELECT * FROM ResidentialUnits";
                         $result = mysql_query($sql,$con);
 
 
@@ -135,23 +136,26 @@ padding-right: 23px;}
                             }
 
 
-                            echo '<table id="resident-'.$decryptedUnitID.'" class="residentlisting">
+                            if ($decryptedCity == "Everett"){
+                                echo '
+                                <table id="resident-'.$decryptedUnitID.'" class="residentlisting">
                                     <tr>
                                         <td width="295" rowspan="4">
                                             <img src="../img/'.$listingimage.'" alt="'.$row['Description'].'" width="275" />
                                         </td>
-                                    <td width="325">'.$decryptedStreetAddress.', '.$decryptedCity.'</td>
-                                </tr>
-                                <tr>
-                                    <td>'.money_format("$%i",$row['MonthlyPrice']).' (monthly)</td>
-                                </tr>
-                                <tr>
-                                    <td>Date Available: '.$row['DateAvailable'].'</td>
-                                </tr>
-                                <tr>
-                                    <td>'.$row['Description'].'</td>
-                                </tr>
-                            </table>';
+                                        <td width="325">'.$decryptedStreetAddress.', '.$decryptedCity.'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>'.money_format("$%i",$row['MonthlyPrice']).' (monthly)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date Available: '.$row['DateAvailable'].'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>'.$row['Description'].'</td>
+                                    </tr>
+                                </table>';
+                            }
                         }
                                             
                         mysqli_close($con);
@@ -169,7 +173,7 @@ padding-right: 23px;}
                         }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "SELECT * FROM ResidentialUnits where city = 'eFVPpTjiPw2RGc23Tap3kn1H8p5Kl4IJ9Fx/biB4lJtufTQeV9hOdcsy89Gq86N2dzLNdp+RA5qFHRqf86iW1g=='";
+                        $sql = "SELECT * FROM ResidentialUnits";
                         $result = mysql_query($sql,$con);
 
 
@@ -199,23 +203,26 @@ padding-right: 23px;}
                             }
 
 
-                            echo '<table id="resident-'.$decryptedUnitID.'" class="residentlisting">
+                            if ($decryptedCity == "Lynn"){
+                                echo '
+                                <table id="resident-'.$decryptedUnitID.'" class="residentlisting">
                                     <tr>
                                         <td width="295" rowspan="4">
                                             <img src="../img/'.$listingimage.'" alt="'.$row['Description'].'" width="275" />
                                         </td>
-                                    <td width="325">'.$decryptedStreetAddress.', '.$decryptedCity.'</td>
-                                </tr>
-                                <tr>
-                                    <td>'.money_format("$%i",$row['MonthlyPrice']).' (monthly)</td>
-                                </tr>
-                                <tr>
-                                    <td>Date Available: '.$row['DateAvailable'].'</td>
-                                </tr>
-                                <tr>
-                                    <td>'.$row['Description'].'</td>
-                                </tr>
-                            </table>';
+                                        <td width="325">'.$decryptedStreetAddress.', '.$decryptedCity.'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>'.money_format("$%i",$row['MonthlyPrice']).' (monthly)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date Available: '.$row['DateAvailable'].'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>'.$row['Description'].'</td>
+                                    </tr>
+                                </table>';
+                            }
                         }
                                             
                         mysqli_close($con);
@@ -233,7 +240,7 @@ padding-right: 23px;}
                         }
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "SELECT * FROM ResidentialUnits where city = 'IwJjhV1rt0vpULWMynZdATLQ3gNYCHkFkbPr6i5HM4p5QpZq/UpK7PmaZdyvhWFifEBXtWF3n1uh/2TJq8PT2A=='";
+                        $sql = "SELECT * FROM ResidentialUnits";
                         $result = mysql_query($sql,$con);
 
 
@@ -263,23 +270,26 @@ padding-right: 23px;}
                             }
 
 
-                            echo '<table id="resident-'.$decryptedUnitID.'" class="residentlisting">
+                            if ($decryptedCity == "Revere"){
+                                echo '
+                                <table id="resident-'.$decryptedUnitID.'" class="residentlisting">
                                     <tr>
                                         <td width="295" rowspan="4">
                                             <img src="../img/'.$listingimage.'" alt="'.$row['Description'].'" width="275" />
                                         </td>
-                                    <td width="325">'.$decryptedStreetAddress.', '.$decryptedCity.'</td>
-                                </tr>
-                                <tr>
-                                    <td>'.money_format("$%i",$row['MonthlyPrice']).' (monthly)</td>
-                                </tr>
-                                <tr>
-                                    <td>Date Available: '.$row['DateAvailable'].'</td>
-                                </tr>
-                                <tr>
-                                    <td>'.$row['Description'].'</td>
-                                </tr>
-                            </table>';
+                                        <td width="325">'.$decryptedStreetAddress.', '.$decryptedCity.'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>'.money_format("$%i",$row['MonthlyPrice']).' (monthly)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date Available: '.$row['DateAvailable'].'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>'.$row['Description'].'</td>
+                                    </tr>
+                                </table>';
+                            }
                         }
                                             
                         mysqli_close($con);

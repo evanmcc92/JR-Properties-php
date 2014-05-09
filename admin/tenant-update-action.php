@@ -3,18 +3,13 @@
 <html>
 <head>
     <?php 
- $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
 
-$dataTenantID = base64_decode($row['TenantID']);
-$ivTenantID = substr($dataTenantID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
-
-$decryptedTenantID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataTenantID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivTenantID),"\0");//script to decrypt
 echo'
-    <title>Tenant '.$decryptedTenantID.' Updated  - J&R Properties</title>';
+    <title>Tenant '.$_POST['TenantID'].' Updated  - J&R Properties</title>';
 
 ?>
     
-    <meta name="robots" content="noindex,nofollow">
+ <meta name="robots" content="noindex,nofollow">
     <meta name="googlebot" content="noindex,nofollow">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
@@ -77,10 +72,7 @@ $encryptedTenantFirstName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_
 $encryptedTenantLastName = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['TenantLastName'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
 $encryptedTenantPhone = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['TenantPhone'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
 
-$dataTenantID = base64_decode($row['TenantID']);
-$ivTenantID = substr($dataTenantID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
 
-$decryptedTenantID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataTenantID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivTenantID),"\0");//script to decrypt
 
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
@@ -97,7 +89,7 @@ $decryptedTenantID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $ke
                                 </tr>
                                 <tr>
                                     <td><strong>Tenant ID:</strong></td>
-                                    <td>'.$decryptedTenantID.'</td>
+                                    <td>'.$_POST['TenantID'].'</td>
                                 </tr>
                                 <tr>
                                     <td><strong>First Name:</strong></td>

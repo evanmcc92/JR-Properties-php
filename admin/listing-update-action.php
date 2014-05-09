@@ -123,7 +123,7 @@ $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
                         $sql = "UPDATE ResidentialUnits
-                                SET UnitName = '$_POST[UnitName]', PropertyID = '$_POST[PropertyID]', StreetAddress = '$encryptedStreetAddress', City = '$encryptedCity', State = '$encryptedState', DateAvailable = '$_POST[DateAvailable]', DateAvailable = '$_POST[DateAvailable]', Description = '$_POST[Description]', MonthlyPrice = '$_POST[MonthlyPrice]', Photos = '$picname', NoBeds = '$_POST[NoBeds]', NoBaths = '$_POST[NoBaths]'
+                                SET UnitName = '$_POST[UnitName]', PropertyID = '$_POST[PropertyID]', StreetAddress = '$encryptedStreetAddress', City = '$encryptedCity', State = '$encryptedState', DateAvailable = '$_POST[DateAvailable]', DateAvailable = '$_POST[DateAvailable]', Description = '$_POST[Description]', MonthlyPrice = '$_POST[MonthlyPrice]', Photos = '$picname', NoBeds = '$_POST[NoBeds]', NoBaths = '$_POST[NoBaths]', Vacant = '$Vacant'
                                 WHERE UnitID = '$_POST[UnitID]'";
 
                         $result = mysql_query($sql,$con);
@@ -142,6 +142,10 @@ $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $
                                     <td><strong>Unit Name:</strong></td>
                                     <td>'.$_POST['UnitName'].'</td>
                                 </tr>
+                                    <tr>
+                                        <td><strong>Vacant:</strong></td>
+                                        <td>'.$Vacant.'</td>
+                                    </tr>
                                 <tr>
                                     <td><strong>Property ID*:</strong></td>
                                     <td>'.$decryptedPropertyID.'</td>
@@ -260,7 +264,7 @@ $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $
 
                         
                         $sql = "UPDATE CommercialUnits 
-                                SET UnitName = '$_POST[UnitName]', PropertyID = '$_POST[PropertyID]', StreetAddress = '$encryptedStreetAddress', City = '$encryptedCity', State = '$encryptedState', DateAvailable = '$_POST[DateAvailable]', DateAvailable = '$_POST[DateAvailable]', Description = '$_POST[Description]', MonthlyPrice = '$_POST[MonthlyPrice]', Photos = '$picname'
+                                SET UnitName = '$_POST[UnitName]', PropertyID = '$_POST[PropertyID]', StreetAddress = '$encryptedStreetAddress', City = '$encryptedCity', State = '$encryptedState', DateAvailable = '$_POST[DateAvailable]', DateAvailable = '$_POST[DateAvailable]', Description = '$_POST[Description]', MonthlyPrice = '$_POST[MonthlyPrice]', Photos = '$picname', Vacant = '$Vacant'
                                 WHERE UnitID = '$_POST[UnitID]'";
 
                         $result = mysql_query($sql,$con);
@@ -280,6 +284,10 @@ $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $
                                     <td><strong>Unit Name:</strong></td>
                                     <td>'.$_POST['UnitName'].'</td>
                                 </tr>
+                                    <tr>
+                                        <td><strong>Vacant:</strong></td>
+                                        <td>'.$Vacant.'</td>
+                                    </tr>
                                 <tr>
                                     <td><strong>Property ID*:</strong></td>
                                     <td>'.$decryptedPropertyID.'</td>

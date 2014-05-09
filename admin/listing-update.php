@@ -100,6 +100,15 @@ $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $
                                 <td><input name="UnitName" id="UnitName" type="text" value="'.$row['UnitName'].'"></td>
                             </tr>
                             <tr>
+                                <td><strong>Check if Vacant*:</strong></td>';
+                                if($row['Vacant']=="Yes"){
+                                    echo '<td><input name="Vacant" id="Vacant" type="checkbox" value="Yes" checked ></td>';
+                                } else {
+                                    echo '<td><input name="Vacant" id="Vacant" type="checkbox" value="No" ></td>';
+                                } 
+                            echo '
+                            </tr>
+                            <tr>
                                 <td><strong>Property ID*:</strong></td>
                                 <td><select name="PropertyID">
                                         <option value="'.$row['PropertyID'].'">Current - '.$decryptedPropertyID.'</option>';
@@ -282,6 +291,15 @@ $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $
                             <tr>
                                 <td><strong>Unit Name:</strong></td>
                                 <td><input name="UnitName" id="UnitName" type="text" value="'.$row['UnitName'].'"></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Check if Vacant*:</strong></td>';
+                                if($row['Vacant']=="Yes"){
+                                    echo '<td><input name="Vacant" id="Vacant" type="checkbox" value="Yes" checked ></td>';
+                                } else {
+                                    echo '<td><input name="Vacant" id="Vacant" type="checkbox" value="No" ></td>';
+                                } 
+                            echo '
                             </tr>
                             <tr>
                                 <td><strong>Property ID*:</strong></td>

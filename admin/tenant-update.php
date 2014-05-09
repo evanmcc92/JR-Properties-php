@@ -2,14 +2,9 @@
 
 <html>
 <head><?php 
- $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
 
-$dataTenantID = base64_decode($row['TenantID']);
-$ivTenantID = substr($dataTenantID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
-
-$decryptedTenantID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataTenantID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivTenantID),"\0");//script to decrypt
 echo'
-    <title>Tenant '.$decryptedTenantID.' Updated  - J&R Properties</title>';
+    <title>Tenant '.$_POST['TenantID'].' Updated  - J&R Properties</title>';
 
 ?>
     <meta name="robots" content="noindex,nofollow">
@@ -85,10 +80,6 @@ $decryptedTenantLastName = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256
 $decryptedTenantPhone = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataTenantPhone, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivTenantPhone),"\0");//script to decrypt
 
 
-$dataTenantID = base64_decode($row['TenantID']);
-$ivTenantID = substr($dataTenantID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
-
-$decryptedTenantID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataTenantID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivTenantID),"\0");//script to decrypt
 
 
                 echo '
@@ -105,7 +96,7 @@ $decryptedTenantID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $ke
                             </tr>
                             <tr>
                                 <td><strong>Tenant ID:</strong></td>
-                                <td><input name="TenantID" id="TenantID" type="text" required value="'.$row['TenantID'].'" hidden>'.$decryptedTenantID.'</td>
+                                <td><input name="TenantID" id="TenantID" type="text" required value="'.$row['TenantID'].'" hidden>'.$row['TenantID'].'</td>
                             </tr>
                             <tr>
                                 <td><strong>First Name:</strong></td>

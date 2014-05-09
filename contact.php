@@ -74,7 +74,7 @@ mail($emailto, 'Contact Form Message J&R Properties', $body, 'From: $email');
                     <p>Name: <input name="name" id="name" size="50" Required="YES" Message="Please enter Complete Name."></p>
                     <p>Message:<br>
                        <textarea name="message" id="message" cols="43" rows="5" placeholder="Enter message here."></textarea></p>
-                    <p><input type="submit" value="Submit"> <input type="reset" value="Reset"></p> 
+                    <p><input type="submit" value="Submit" class="button"> <input type="reset" value="Reset" class="button" ></p> 
                 </form>
             </section>
       </article>

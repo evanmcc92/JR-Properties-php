@@ -36,7 +36,7 @@
                 <h1>Aplicaci&oacute;n</h1>
     
         <article>
-                <p>Si usted desea alquilar una unidad dentro de nuestras  propiedades residenciales, por favor complete la solicitud, o imprima y envie  por correo <a href="../application.pdf">este formulario</a>. Al terminar, nosotros vamos a mantenernos en  contacto y programar una visita a nuestras propiedades que se encuentren  disponibles. Si usted es propietario de un negocio y est&aacute interesado en el  alquiler de un local comercial, por favor contactenos directamente al email: <a href="mailto:email@example.com">email@example.com</a> para consultas generales de nuestras propiedad.</p>
+                <p>Si usted desea alquilar una unidad dentro de nuestras  propiedades residenciales, por favor complete la solicitud, o imprima y envie  por correo <a href="../application.pdf">este formulario</a>. Al terminar, nosotros vamos a mantenernos en  contacto y programar una visita a nuestras propiedades que se encuentren  disponibles. Si usted es propietario de un negocio y est&aacute interesado en el  alquiler de un local comercial, por favor contactenos directamente al email: <a href="mailto:jandrpropertyrentals@gmail.com">jandrpropertyrentals@gmail.com</a> para consultas generales de nuestras propiedad.</p>
 <section id="applicationform">
       <form method="post" action="app-action.php" >
             <table>

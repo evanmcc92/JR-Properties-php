@@ -56,7 +56,7 @@
 
                          // Check connection
                         if (mysqli_connect_errno()){
-                          echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
                         
 
@@ -87,7 +87,6 @@
                                 }
                             } else {
                                 echo "Invalid file";
-    
                             }
                         }
 
@@ -98,90 +97,96 @@
                             $Vacant = "No";
                         }
 
-//encryption stuff
-$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
-$iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),MCRYPT_DEV_URANDOM); //used to add more randomness to the encryption process
+                        //encryption stuff
+                        $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+                        $iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),MCRYPT_DEV_URANDOM); //used to add more randomness to the encryption process
 
 
-$encryptedStreetAddress = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['StreetAddress'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
-$encryptedCity = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['City'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
-$encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['UnitID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
-$encryptedState = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['State'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+                        $encryptedStreetAddress = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['StreetAddress'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+                        $encryptedCity = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['City'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+                        $encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['UnitID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+                        $encryptedState = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['State'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
 
- $dataPropertyID = base64_decode($_POST['PropertyID']);
-                                    $ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+                        $dataPropertyID = base64_decode($_POST['PropertyID']);
+                        $ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
 
-                                    $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
+                        $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "INSERT INTO ResidentialUnits
-                                (UnitID,UnitName,PropertyID,StreetAddress,City,State,DateAvailable,Description,MonthlyPrice,Photos, NoBaths,NoBeds,Vacant)
-                                VALUES('$encryptedUnitID', '$_POST[UnitName]', '$_POST[PropertyID]', '$encryptedStreetAddress', '$encryptedCity', '$encryptedState', '$_POST[DateAvailable]', '$_POST[Description]', '$_POST[MonthlyPrice]','$picname','$_POST[NoBaths]', '$_POST[NoBeds]', '$Vacant' );";
+                        $sql = "INSERT INTO ResidentialUnits (UnitID,UnitName,PropertyID,StreetAddress,City,State,DateAvailable,Description,MonthlyPrice,Photos, NoBaths,NoBeds,Vacant) VALUES('$encryptedUnitID', '$_POST[UnitName]', '$_POST[PropertyID]', '$encryptedStreetAddress', '$encryptedCity', '$encryptedState', '$_POST[DateAvailable]', '$_POST[Description]', '$_POST[MonthlyPrice]','$picname','$_POST[NoBaths]', '$_POST[NoBeds]', '$Vacant' );";
 
 
+                        if (!mysql_query($sql,$con)) {
+                            die('Error: ' . mysql_error($con));
+                        } else {
+                            $result = mysql_query($sql,$con);
+                        }
 
-                        $result = mysql_query($sql,$con);
-if (!mysql_query($sql,$con)) {
-              die('Error: ' . mysql_error($con));
-            }
+                        
+
                         echo '
                             <p><a href="listing-all.php">All Listings</a></p>
-                                <table>
-                                    <tr>
-                                        <th colspan="2">Residential Listing</th>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Unit ID*:</strong></td>
-                                        <td>'.$_POST['UnitID'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Unit Name:</strong></td>
-                                        <td>'.$_POST['UnitName'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Property ID*:</strong></td>
-                                        <td>'.$decryptedPropertyID.'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Street Address*:</strong></td>
-                                        <td>'.$_POST['StreetAddress'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>City*:</strong></td>
-                                        <td>'.$_POST['City'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>State*:</strong></td>
-                                        <td>'.$_POST['State'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Date Available*:</strong></td>
-                                        <td>'.$_POST['DateAvailable'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Number of Bedrooms:</strong></td>
-                                        <td>'.$_POST['NoBeds'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Number of Bathrooms:</strong></td>
-                                        <td>'.$_POST['NoBaths'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Monthly Price*:</strong></td>
-                                        <td>'.$_POST['MonthlyPrice'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Description*:</strong></td>
-                                        <td>'.$_POST['Description'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Photos</strong></td>
-                                        <td><img src="../img/'.$picname .'"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="break">&nbsp;</td>
-                                    </tr>
-                                </table>';
+                            <table>
+                                <tr>
+                                    <th colspan="2">Residential Listing</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Unit ID*:</strong></td>
+                                    <td>'.$_POST['UnitID'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Unit Name:</strong></td>
+                                    <td>'.$_POST['UnitName'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Vacant:</strong></td>
+                                    <td>'.$Vacant.'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Property ID*:</strong></td>
+                                    <td>'.$decryptedPropertyID.'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Street Address*:</strong></td>
+                                    <td>'.$_POST['StreetAddress'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>City*:</strong></td>
+                                    <td>'.$_POST['City'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>State*:</strong></td>
+                                    <td>'.$_POST['State'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date Available*:</strong></td>
+                                    <td>'.$_POST['DateAvailable'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Number of Bedrooms:</strong></td>
+                                    <td>'.$_POST['NoBeds'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Number of Bathrooms:</strong></td>
+                                    <td>'.$_POST['NoBaths'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Monthly Price*:</strong></td>
+                                    <td>'.$_POST['MonthlyPrice'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Description*:</strong></td>
+                                    <td>'.$_POST['Description'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Photos</strong></td>
+                                    <td><img src="../img/'.$picname .'"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="break">&nbsp;</td>
+                                </tr>
+                            </table>';
+                        mysql_close($con);
 
                     } else {
 
@@ -231,82 +236,88 @@ if (!mysql_query($sql,$con)) {
                         }
 
 
-//encryption stuff
-$key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
-$iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),MCRYPT_DEV_URANDOM); //used to add more randomness to the encryption process
+                        //encryption stuff
+                        $key = 'DkDseIX14GOD+5UhjpWdh7YzHTj5RRmOSrfJI/Gry+Lk+kxWVF4jvDhUBLHu23LnNycMqCmKrsK2dEuQPAy8sg=='; //password for encryption
+                        $iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC),MCRYPT_DEV_URANDOM); //used to add more randomness to the encryption process
 
 
-$encryptedPropertyID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['PropertyID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
-$encryptedStreetAddress = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['StreetAddress'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
-$encryptedCity = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['City'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
-$encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['UnitID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
-$encryptedState = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['State'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+                        $encryptedPropertyID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['PropertyID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+                        $encryptedStreetAddress = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['StreetAddress'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+                        $encryptedCity = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['City'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+                        $encryptedUnitID = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['UnitID'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
+                        $encryptedState = base64_encode($iv .  mcrypt_encrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),$_POST['State'],MCRYPT_MODE_CBC,$iv)); //script to encrypt
 
-                                    $dataPropertyID = base64_decode($_POST['PropertyID']);
-                                    $ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
+                        $dataPropertyID = base64_decode($_POST['PropertyID']);
+                        $ivPropertyID = substr($dataPropertyID, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC));
 
-                                    $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
+                        $decryptedPropertyID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataPropertyID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivPropertyID),"\0");//script to decrypt
 
 
                         $db_selected = mysql_select_db("jrproper_jrproperties",$con);
-                        $sql = "INSERT INTO CommercialUnits
-                                (UnitID,UnitName,PropertyID,StreetAddress,City,State,DateAvailable,Description,MonthlyPrice,Photos, Vacant)
-                                VALUES('$encryptedUnitID', '$_POST[UnitName]', '$_POST[PropertyID]', '$encryptedStreetAddress', '$encryptedCity', '$encryptedState', '$_POST[DateAvailable]', '$_POST[Description]', '$_POST[MonthlyPrice]', '$picname', '$Vacant');";
+                        $sql = "INSERT INTO CommercialUnits (UnitID,UnitName,PropertyID,StreetAddress,City,State,DateAvailable,Description,MonthlyPrice,Photos, Vacant) VALUES('$encryptedUnitID', '$_POST[UnitName]', '$_POST[PropertyID]', '$encryptedStreetAddress', '$encryptedCity', '$encryptedState', '$_POST[DateAvailable]', '$_POST[Description]', '$_POST[MonthlyPrice]', '$picname', '$Vacant');";
 
-                        $result = mysql_query($sql,$con);
-if (!mysql_query($sql,$con)) {
-              die('Error: ' . mysql_error($con));
-            }
-                            echo '
+                        if (!mysql_query($sql,$con)) {
+                            die('Error: ' . mysql_error($con));
+                        } else {
+                            $result = mysql_query($sql,$con);
+                        }
+                        
+                        echo '
                             <p><a href="listing-all.php">All Listings</a></p>
-                                <table>
-                                    <tr>
-                                        <th colspan="2">Commercial Listing</th>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Unit ID*:</strong></td>
-                                        <td>'.$_POST['UnitID'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Unit Name:</strong></td>
-                                        <td>'.$_POST['UnitName'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Property ID*:</strong></td>
-                                        <td>'.$decryptedPropertyID.'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Street Address*:</strong></td>
-                                        <td>'.$_POST['StreetAddress'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>City*:</strong></td>
-                                        <td>'.$_POST['City'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>State*:</strong></td>
-                                        <td>'.$_POST['State'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Date Available*:</strong></td>
-                                        <td>'.$_POST['DateAvailable'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Monthly Price*:</strong></td>
-                                        <td>'.$_POST['MonthlyPrice'].'</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Description*:</strong></td>
-                                        <td>'.$_POST['Description'].'</td>
-                                    </tr>
-                                    <tr>
-                                    	<td><strong>Photos</strong></td>
-                                    	<td><img src="../img/'.$picname .'"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="break">&nbsp;</td>
-                                    </tr>
-                                </table>';
+                            <table>
+                                <tr>
+                                    <th colspan="2">Commercial Listing</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Unit ID*:</strong></td>
+                                    <td>'.$_POST['UnitID'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Unit Name:</strong></td>
+                                    <td>'.$_POST['UnitName'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Vacant:</strong></td>
+                                    <td>'.$Vacant.'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Property ID*:</strong></td>
+                                    <td>'.$decryptedPropertyID.'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Street Address*:</strong></td>
+                                    <td>'.$_POST['StreetAddress'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>City*:</strong></td>
+                                    <td>'.$_POST['City'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>State*:</strong></td>
+                                    <td>'.$_POST['State'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date Available*:</strong></td>
+                                    <td>'.$_POST['DateAvailable'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Monthly Price*:</strong></td>
+                                    <td>'.$_POST['MonthlyPrice'].'</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Description*:</strong></td>
+                                    <td>'.$_POST['Description'].'</td>
+                                </tr>
+                                <tr>
+                                	<td><strong>Photos</strong></td>
+                                	<td><img src="../img/'.$picname .'"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="break">&nbsp;</td>
+                                </tr>
+                            </table>';
+                        mysql_close($con);
+                    
                     }
                 }
             ?>

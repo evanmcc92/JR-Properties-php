@@ -23,7 +23,7 @@
       <li>Los procedimientos de seguridad para proteger el mal uso de su informaci&oacute;n.</li>
       <li>C&oacute;mo puede corregir cualquier inexactitud en la informaci&oacute;n.</li>
     </ul>
-        <p>Si usted siente que no estamos cumpliendo con esta pol&iacute;tica de privacidad, usted debe ponerse en contacto con nosotros inmediatamente por correo electr&oacute;nico <a href="mailto:perryjames249@gmail.com">perryjames249@gmail.com </a></p>
+        <p>Si usted siente que no estamos cumpliendo con esta pol&iacute;tica de privacidad, usted debe ponerse en contacto con nosotros inmediatamente por correo electr&oacute;nico <a href="mailto:jandrpropertyrentals@gmail.com">jandrpropertyrentals@gmail.com</a></p>
                 <article>
             <section id="info">
                 <h1>Sobre la recopilaci&oacute;n, uso y compartir</h1>

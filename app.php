@@ -42,9 +42,9 @@
                     <table>
                         <tr>
                           <td colspan="4"> 
-                           
+                           <cfoutput>
                           <input name="AppDate" id="AppDate" type="hidden" value="<?php echo date("m/d/Y");?>"></td>
-                       
+                          </cfoutput>
                         </tr>
                         <tr>
                           <td colspan="4">&nbsp;</td>

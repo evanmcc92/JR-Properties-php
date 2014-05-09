@@ -67,6 +67,15 @@ $decryptedStreetAddress = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256'
 $decryptedCity = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataCity, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivCity),"\0");//script to decrypt
 $decryptedUnitID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataUnitID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivUnitID),"\0");//script to decrypt
 
+if (empty($row['Photos'])){
+                                $sql2 = "SELECT * FROM Properties where PropertyID = '".$row['PropertyID']."';";
+                                $result2 = mysql_query($sql2,$con);
+                                $row2 = mysql_fetch_array($result2);
+
+                                $listingimage = $row2['Photos'];
+                            } else {
+                                $listingimage = $row['Photos'];
+                            }
 
                 echo '
         <article>
@@ -91,7 +100,7 @@ $decryptedUnitID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key,
                     <table id="commercial-'.$row['UnitID'].'" class="residentlisting">
                         <tr>
                             <td width="295" rowspan="5">
-                                <img src="../img/'.$decryptedStreetAddress.'.png" alt="'.$row['Description'].'" width="275" />
+                                <img src="../img/'.$listingimage.'" alt="'.$row['Description'].'" width="275" />
                             </td>
                             <td width="325">'.$decryptedStreetAddress.', '.$decryptedCity.'</td>
                         </tr>
@@ -143,6 +152,15 @@ $decryptedStreetAddress = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256'
 $decryptedCity = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataCity, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivCity),"\0");//script to decrypt
 $decryptedUnitID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key, true),substr($dataUnitID, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)),MCRYPT_MODE_CBC,$ivUnitID),"\0");//script to decrypt
 
+if (empty($row['Photos'])){
+                                $sql2 = "SELECT * FROM Properties where PropertyID = '".$row['PropertyID']."';";
+                                $result2 = mysql_query($sql2,$con);
+                                $row2 = mysql_fetch_array($result2);
+
+                                $listingimage = $row2['Photos'];
+                            } else {
+                                $listingimage = $row['Photos'];
+                            }
                 echo '
         <article>
 
@@ -166,7 +184,7 @@ $decryptedUnitID = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash('sha256', $key,
                     <table id="commercial-'.$row['UnitID'].'" class="residentlisting">
                         <tr>
                             <td width="295" rowspan="5">
-                                <img src="../img/'.$decryptedStreetAddress.'.png" alt="'.$row['Description'].'" width="275" />
+                                <img src="../img/'.$listingimage.'" alt="'.$row['Description'].'" width="275" />
                             </td>
                             <td width="325">'.$decryptedStreetAddress.', '.$decryptedCity.'</td>
                         </tr>

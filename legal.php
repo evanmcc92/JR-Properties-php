@@ -22,7 +22,7 @@
       <li>The security procedures in place to protect the misuse of your information.</li>
       <li>How you can correct any inaccuracies in the information.</li>
     </ul>
-    <p>If you feel that we are not abiding by this privacy policy, you should contact us immediately via email <a href="mailto:perryjames249@gmail.com">perryjames249@gmail.com</a>.</p>
+    <p>If you feel that we are not abiding by this privacy policy, you should contact us immediately via email <a href="mailto:jandrpropertyrentals@gmail.com">jandrpropertyrentals@gmail.com</a>.</p>
         
         <article>
             <section id="info">

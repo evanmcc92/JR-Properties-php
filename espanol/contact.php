@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html>
-<head>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb18030">
     <title>Contact Us - J&R Properties</title>
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
@@ -73,7 +73,7 @@ mail($emailto, 'Contact Form Message J&R Properties', $body, 'From: '.$email);
                     <p>Nombre: <input name="name" id="name" size="50" Required="YES" Message="Entre su nombre aqui."></p>
                     <p>Mensaje:<br>
                        <textarea name="message" id="message" cols="43" rows="5" placeholder="Entre su mensaje aqui."></textarea></p>
-                    <p><input type="submit" value="Enviar"> <input type="reset" value="Reiniciar"></p> 
+                    <p><input type="submit" value="Enviar" class="button"> <input type="reset" value="Reiniciar" class="button"></p> 
                 </form>
             </section>
       </article>

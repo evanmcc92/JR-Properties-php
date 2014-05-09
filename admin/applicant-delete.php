@@ -143,12 +143,7 @@ $decryptedPersonalReferencePhone = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256,hash
 
 //echo the results
 
-                        echo '<p>
-                        <form action="applicant-delete.php" method="post">
-                            <input type="hidden" name="ApplicationID" value="'.$_POST['ApplicationID'].'">
-                            <input value="Delete" type="submit" class="button">
-                        </form>
-                    </p>
+                        echo '
                     <p><a href="applicant-all.php">All Applications</a>                                  
                     <p>&nbsp;</p>
                     <table>
